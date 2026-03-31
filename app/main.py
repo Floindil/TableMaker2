@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import players, teams
-
+from app.core.db import Base, engine
 
 from app.models.player import Player
 from app.models.team import Team
