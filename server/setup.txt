@@ -1,0 +1,19 @@
+Raspi Setup:
+apt update
+cd /home/floindil/
+cd /home/floindil/vapp/TableMaker2
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+apt install git -y
+git clone https://github.com/Floindil/TableMaker2.git
+nano /etc/systemd/system/tm2.service
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+systemctl daemon-reload
+systemctl enable tm2
+systemctl start tm2
+
+Raspi update:
+cd /home/floindil/tm2
+git pull
