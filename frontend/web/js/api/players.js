@@ -17,3 +17,9 @@ export async function updatePlayer(playerId, playerData) {
         body: JSON.stringify(playerData)
     });
 }
+
+export async function deletePlayer(playerId) {
+  return apiRequest(`/players/${playerId}`, {
+    method: "DELETE"
+  });
+}

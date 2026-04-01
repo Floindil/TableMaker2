@@ -37,3 +37,6 @@ class PlayerService:
             raise HTTPException(status_code=400, detail="Keine Änderungsdaten übergeben")
 
         return self.repo.update(db, player, **update_data)
+    
+    def delete_player(self, db: Session, player_id: int):
+        return self.repo.delete(db, player_id)

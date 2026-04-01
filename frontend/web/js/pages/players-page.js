@@ -1,4 +1,4 @@
-import { getPlayers, createPlayer, updatePlayer } from "../api/players.js";
+import { getPlayers, createPlayer, updatePlayer, deletePlayer } from "../api/players.js";
 
 const reloadButton = document.getElementById("reload-players-btn");
 const tableBody = document.getElementById("players-table-body");

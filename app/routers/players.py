@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
-from app.schemas.player import PlayerRead, PlayerUpdate
+from app.schemas.player import PlayerCreate, PlayerRead, PlayerUpdate
 from app.services.player_service import PlayerService
 
 router = APIRouter()
@@ -25,6 +25,16 @@ def get_player(player_id: int, db: DbSession):
     return player
 
 
+@router.post("/", response_model=PlayerRead, status_code=201)
+def create_player(payload: PlayerCreate, db: DbSession):
+    return service.create_player(db, payload)
+
+
 @router.patch("/{player_id}", response_model=PlayerRead)
 def update_player(player_id: int, payload: PlayerUpdate, db: DbSession):
     return service.update_player(db, player_id, payload)
+
+
+@router.delete("/{player_id}", status_code=204)
+def delete_player(player_id: int, db: DbSession):
+    return service.delete_player(db, player_id)
