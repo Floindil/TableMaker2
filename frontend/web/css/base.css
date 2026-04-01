@@ -5,17 +5,62 @@ body {
   background: #f5f5f5;
 }
 
-.page {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
 .card {
-  background: white;
+  background: #fff;
   padding: 20px;
   border-radius: 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.players-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.players-table th,
+.players-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.hidden {
+  display: none;
+}
+
+.modal-content {
+  width: min(500px, 90%);
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.close {
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .player-form {
@@ -31,61 +76,11 @@ body {
 }
 
 .player-form input {
+  width: 100%;
+  box-sizing: border-box;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-}
-
-.player-form button {
-  margin-top: 8px;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
 }
 
 .message {
   margin-top: 12px;
-  min-height: 20px;
-}
-
-.players-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.player-item {
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background: #fafafa;
-}
-
-.player-name {
-  font-weight: bold;
-  margin-bottom: 4px;
-}
-
-.players-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 12px;
-}
-
-.players-table th,
-.players-table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: left;
-    vertical-align: top;
-}
-
-.players-table th {
-    background-color: #f0f0f0;
-}
-
-.players-table tbody tr:nth-child(even) {
-    background-color: #fafafa;
 }

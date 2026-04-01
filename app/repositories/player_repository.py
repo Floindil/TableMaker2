@@ -15,3 +15,11 @@ class PlayerRepository:
         db.commit()
         db.refresh(player)
         return player
+
+    def update(self, db: Session, player: Player, **data) -> Player:
+        for key, value in data.items():
+            setattr(player, key, value)
+
+        db.commit()
+        db.refresh(player)
+        return player

@@ -1,82 +1,89 @@
 <!DOCTYPE html>
 <html lang="de">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Spieler</title>
-        <link rel="stylesheet" href="./css/base.css" />
-    </head>
-    <body>
-        <main class="page">
-            <h1>Spieler</h1>
+<head>
+    <meta charset="UTF-8">
+    <title>Spieler</title>
 
-            <section class="card">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+    <section class="card">
+        <h2>Spieler</h2>
+
+        <div class="actions">
+            <button type="button" id="open-player-modal-btn">Spieler erstellen</button>
+            <button type="button" id="reload-players-btn">Neu laden</button>
+        </div>
+
+        <div class="players-list">
+            <table class="players-table">
+                <thead>
+                    <tr>
+                        <th>Vorname</th>
+                        <th>Nachname</th>
+                        <th>Geburtsdatum</th>
+                        <th>E-Mail</th>
+                        <th>Telefon</th>
+                        <th>Lizenz</th>
+                        <th>Aktionen</th>
+                    </tr>
+                </thead>
+                <tbody id="players-table-body">
+                    <tr>
+                        <td colspan="6">Noch keine Daten geladen.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div id="player-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
                 <h2>Spieler erstellen</h2>
+                <button type="button" id="close-player-modal-btn" class="close">x</button>
+            </div>
 
-                <form id="player-form" class="player-form">
-                    <label>
-                        <span>Vorname</span>
-                        <input type="text" name="prename" required />
-                    </label>
+            <form id="player-form" class="player-form">
+                <label>
+                    <span>Vorname</span>
+                    <input type="text" name="prename" required>
+                </label>
 
-                    <label>
-                        <span>Nachname</span>
-                        <input type="text" name="lastname" required />
-                    </label>
+                <label>
+                    <span>Nachname</span>
+                    <input type="text" name="lastname" required>
+                </label>
 
-                    <label>
-                        <span>Geburtsdatum</span>
-                        <input type="text" name="birthdate" placeholder="DD.MM.JJJJ" />
-                    </label>
+                <label>
+                    <span>Geburtsdatum</span>
+                    <input type="text" name="birthdate" placeholder="DD.MM.JJJJ">
+                </label>
 
-                    <label>
-                        <span>E-Mail</span>
-                        <input type="email" name="email" />
-                    </label>
+                <label>
+                    <span>E-Mail</span>
+                    <input type="email" name="email">
+                </label>
 
-                    <label>
-                        <span>Telefon</span>
-                        <input type="text" name="phone" />
-                    </label>
+                <label>
+                    <span>Telefon</span>
+                    <input type="text" name="phone">
+                </label>
 
-                    <label>
-                        <span>Lizenz</span>
-                        <input type="text" name="license" />
-                    </label>
+                <label>
+                    <span>Lizenz</span>
+                    <input type="text" name="license">
+                </label>
 
-                    <button type="submit">Spieler anlegen</button>
-                </form>
+                <input type="hidden" id="player-id" name="player-id">
 
-                <p id="player-message" class="message"></p>
-            </section>
+                <button type="submit" id="submit-button">Spieler anlegen</button>
+            </form>
 
-            <section class="card">
-                <h2>Spielerliste</h2>
-
-                <button type="button" id="reload-players-btn">Neu laden</button>
-
-                <div id="players-list" class="players-list">
-                    <table class="players-table">
-                        <thead>
-                            <tr>
-                                <th>Vorname</th>
-                                <th>Nachname</th>
-                                <th>Geburtsdatum</th>
-                                <th>E-Mail</th>
-                                <th>Telefon</th>
-                                <th>Lizenz</th>
-                            </tr>
-                        </thead>
-                        <tbody id="players-table-body">
-                            <tr>
-                                <td colspan="7">Noch keine Daten geladen.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-        </main>
-
-        <script type="module" src="./js/pages/players-page.js"></script>
-    </body>
+            <p id="player-message" class="message"></p>
+        </div>
+    </div>
+    <script type="module" src="js/pages/players-page.js"></script>
+</body>
 </html>

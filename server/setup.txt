@@ -17,3 +17,8 @@ systemctl start tm2
 Raspi update:
 cd /home/floindil/tm2
 git pull
+
+Frontend Test:
+cd C:\Users\villa\Documents\Projects\TableMaker2\frontend\web
+python -m http.server 5500
+http://127.0.0.1:5500/players.html

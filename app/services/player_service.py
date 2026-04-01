@@ -1,5 +1,7 @@
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from app.repositories.player_repository import PlayerRepository
+from app.schemas.player import PlayerUpdate
 
 
 class PlayerService:
@@ -22,3 +24,16 @@ class PlayerService:
             phone=payload.phone,
             license=payload.license
         )
+    
+    def update_player(self, db: Session, player_id: int, payload: PlayerUpdate):
+        player = self.repo.get_by_id(db, player_id)
+
+        if not player:
+            raise HTTPException(status_code=404, detail="Spieler nicht gefunden")
+
+        update_data = payload.model_dump(exclude_unset=True)
+
+        if not update_data:
+            raise HTTPException(status_code=400, detail="Keine Änderungsdaten übergeben")
+
+        return self.repo.update(db, player, **update_data)
