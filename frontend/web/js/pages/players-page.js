@@ -39,6 +39,17 @@ function closePlayerModal() {
     messageBox.textContent = "";
 }
 
+async function deletePlayerButton(player_id) {
+    const confirmed = window.confirm(
+        `Spieler ${player.prename} ${player.lastname} wirklich löschen?`
+    );
+
+    if (!confirmed) return;
+
+    await deletePlayer(player_id);
+    await loadPlayers();
+}
+
 function renderPlayersTable(players) {
     tableBody.innerHTML = "";
 
@@ -75,7 +86,7 @@ function renderPlayersTable(players) {
         const deleteButton = row.querySelector(`#${deleteBtnID}`);
 
         editButton.addEventListener("click", () => openPlayerModal(player));
-        deleteButton.addEventListener("click", () => deletePlayer(player.id));
+        deleteButton.addEventListener("click", () => deletePlayerButton(player.id));
     }
 }
 

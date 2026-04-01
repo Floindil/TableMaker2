@@ -38,5 +38,10 @@ class PlayerService:
 
         return self.repo.update(db, player, **update_data)
     
+    from fastapi import HTTPException
+
     def delete_player(self, db: Session, player_id: int):
-        return self.repo.delete(db, player_id)
+        player = self.repo.delete(db, player_id)
+
+        if not player:
+            raise HTTPException(status_code=404, detail="Spieler nicht gefunden")

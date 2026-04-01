@@ -37,4 +37,4 @@ def update_player(player_id: int, payload: PlayerUpdate, db: DbSession):
 
 @router.delete("/{player_id}", status_code=204)
 def delete_player(player_id: int, db: DbSession):
-    return service.delete_player(db, player_id)
+    service.delete_player(db, player_id)

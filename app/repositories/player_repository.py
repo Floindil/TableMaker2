@@ -24,7 +24,11 @@ class PlayerRepository:
         db.refresh(player)
         return player
     
-    def delete(self, db: Session, player_id: int) -> None:
-        player = self.get_by_id(player_id)
+    def delete(self, db: Session, player_id: int):
+        player = self.get_by_id(db, player_id)
+        if not player:
+            return None
+
         db.delete(player)
         db.commit()
+        return player
