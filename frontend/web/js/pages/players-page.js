@@ -40,12 +40,6 @@ function closePlayerModal() {
 }
 
 async function deletePlayerButton(player_id) {
-    const confirmed = window.confirm(
-        `Spieler ${player.prename} ${player.lastname} wirklich löschen?`
-    );
-
-    if (!confirmed) return;
-
     await deletePlayer(player_id);
     await loadPlayers();
 }
