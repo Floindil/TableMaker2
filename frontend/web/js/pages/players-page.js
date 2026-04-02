@@ -1,4 +1,15 @@
-import { getPlayers, createPlayer, updatePlayer, deletePlayer } from "../api/players.js";
+import {
+    applyTranslations,
+    initLanguageSelector,
+    t
+} from "../i18n/i18n.js";
+
+import {
+    getPlayers,
+    createPlayer,
+    updatePlayer,
+    deletePlayer
+} from "../api/players.js";
 
 const reloadButton = document.getElementById("reload-players-btn");
 const tableBody = document.getElementById("players-table-body");
@@ -9,57 +20,83 @@ const closeModalButton = document.getElementById("close-player-modal-btn");
 
 const form = document.getElementById("player-form");
 const messageBox = document.getElementById("player-message");
+const languageSwitcher = document.getElementById("language-switcher");
 
-function openPlayerModal(player) {
+const submitButton = document.getElementById("submit-button");
+const playerIdInput = document.getElementById("player-id");
+const modalTitle = modal.querySelector(".modal-header h2");
+
+function setDocumentTexts() {
+    document.title = t("player.title");
+}
+
+function setCreateMode() {
+    modalTitle.textContent = t("player.create");
+    submitButton.textContent = t("player.create");
+}
+
+function setUpdateMode() {
+    modalTitle.textContent = t("player.update");
+    submitButton.textContent = t("player.update");
+}
+
+function openPlayerModal(player = null) {
     modal.classList.remove("hidden");
     messageBox.textContent = "";
 
-    const button = document.getElementById("submit-button");
-    const playerIdInput = document.getElementById("player-id");
-
     if (player) {
-        button.textContent = "Spieler aktualisieren";
+        setUpdateMode();
+
         form.prename.value = player.prename ?? "";
         form.lastname.value = player.lastname ?? "";
         form.birthdate.value = player.birthdate ?? "";
         form.email.value = player.email ?? "";
         form.phone.value = player.phone ?? "";
         form.license.value = player.license ?? "";
-        playerIdInput.value = player.id;
-
+        playerIdInput.value = player.id ?? "";
     } else {
-        button.textContent = "Spieler erstellen";
+        form.reset();
         playerIdInput.value = "";
+        setCreateMode();
     }
 }
 
 function closePlayerModal() {
     modal.classList.add("hidden");
     form.reset();
+    playerIdInput.value = "";
     messageBox.textContent = "";
+    setCreateMode();
 }
 
-async function deletePlayerButton(player_id) {
-    await deletePlayer(player_id);
-    await loadPlayers();
+async function handleDeletePlayer(playerId) {
+    try {
+        await deletePlayer(playerId);
+        await loadPlayers();
+    } catch (error) {
+        console.error(t("error.delete"), error);
+        messageBox.textContent = `${t("error.delete")}: ${error.message}`;
+    }
+}
+
+function renderEmptyTable(messageKey) {
+    tableBody.innerHTML = `
+        <tr>
+            <td colspan="7">${t(messageKey)}</td>
+        </tr>
+    `;
 }
 
 function renderPlayersTable(players) {
     tableBody.innerHTML = "";
 
-    if (!players.length) {
-        tableBody.innerHTML = `
-            <tr>
-                <td colspan="6">Keine Spieler vorhanden.</td>
-            </tr>
-        `;
+    if (!players || players.length === 0) {
+        renderEmptyTable("player.notAvailable");
         return;
     }
 
     for (const player of players) {
         const row = document.createElement("tr");
-        const editBtnID = "edit_" + player.id
-        const deleteBtnID = "delete_" + player.id
 
         row.innerHTML = `
             <td>${player.prename ?? ""}</td>
@@ -69,18 +106,18 @@ function renderPlayersTable(players) {
             <td>${player.phone ?? "-"}</td>
             <td>${player.license ?? "-"}</td>
             <td>
-                <button type="button" id=${editBtnID}>edit</button>
-                <button type="button" id=${deleteBtnID}>delete</button>
+                <button type="button" class="edit-player-btn">${t("common.edit")}</button>
+                <button type="button" class="delete-player-btn">${t("common.delete")}</button>
             </td>
         `;
 
-        tableBody.appendChild(row);
-
-        const editButton = row.querySelector(`#${editBtnID}`);
-        const deleteButton = row.querySelector(`#${deleteBtnID}`);
+        const editButton = row.querySelector(".edit-player-btn");
+        const deleteButton = row.querySelector(".delete-player-btn");
 
         editButton.addEventListener("click", () => openPlayerModal(player));
-        deleteButton.addEventListener("click", () => deletePlayerButton(player.id));
+        deleteButton.addEventListener("click", () => handleDeletePlayer(player.id));
+
+        tableBody.appendChild(row);
     }
 }
 
@@ -89,12 +126,12 @@ async function loadPlayers() {
         const players = await getPlayers();
         renderPlayersTable(players);
     } catch (error) {
+        console.error("Fehler beim Laden der Spieler:", error);
         tableBody.innerHTML = `
             <tr>
-                <td colspan="6">Fehler beim Laden: ${error.message}</td>
+                <td colspan="7">${t("error.load")}: ${error.message}</td>
             </tr>
         `;
-        console.error("Fehler beim Laden der Spieler:", error);
     }
 }
 
@@ -103,46 +140,67 @@ async function handleSubmit(event) {
     messageBox.textContent = "";
 
     const formData = new FormData(form);
-    const playerID = formData.get("player-id")
+    const playerId = formData.get("player-id");
 
     const payload = {
-        prename: formData.get("prename")?.trim(),
-        lastname: formData.get("lastname")?.trim(),
+        prename: formData.get("prename")?.trim() || "",
+        lastname: formData.get("lastname")?.trim() || "",
         birthdate: formData.get("birthdate")?.trim() || null,
         email: formData.get("email")?.trim() || null,
         phone: formData.get("phone")?.trim() || null,
         license: formData.get("license")?.trim() || null
     };
 
-    if (playerID) {
-        try {
-            await updatePlayer(playerID, payload);
-        } catch (error) {
-            messageBox.textContent = `Fehler: ${error.message}`;
-            console.error("Fehler beim Aktualisieren:", error);
-        }
-    } else {
-        try {
+    try {
+        if (playerId) {
+            await updatePlayer(playerId, payload);
+        } else {
             await createPlayer(payload);
-        } catch (error) {
-            messageBox.textContent = `Fehler: ${error.message}`;
-            console.error("Fehler beim Erstellen:", error);
         }
+
+        await loadPlayers();
+        closePlayerModal();
+    } catch (error) {
+        console.error("Fehler beim Speichern des Spielers:", error);
+
+        messageBox.textContent = playerId
+            ? `${t("error.update")}: ${error.message}`
+            : `${t("error.create")}: ${error.message}`;
     }
-    await loadPlayers();
-    closePlayerModal();
-    
 }
 
-openModalButton.addEventListener("click",  () => openPlayerModal(null));
-closeModalButton.addEventListener("click", closePlayerModal);
-reloadButton.addEventListener("click", loadPlayers);
-form.addEventListener("submit", handleSubmit);
+function bindEvents() {
+    openModalButton.addEventListener("click", () => openPlayerModal());
+    closeModalButton.addEventListener("click", closePlayerModal);
+    reloadButton.addEventListener("click", loadPlayers);
+    form.addEventListener("submit", handleSubmit);
 
-modal.addEventListener("click", (event) => {
-    if (event.target === modal) {
-        closePlayerModal();
-    }
+    modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+            closePlayerModal();
+        }
+    });
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+    initLanguageSelector(languageSwitcher, async () => {
+        applyTranslations();
+        setDocumentTexts();
+
+        if (!modal.classList.contains("hidden")) {
+            if (playerIdInput.value) {
+                setUpdateMode();
+            } else {
+                setCreateMode();
+            }
+        }
+
+        await loadPlayers();
+    });
+
+    applyTranslations();
+    setDocumentTexts();
+    setCreateMode();
+    bindEvents();
+    await loadPlayers();
 });
-
-document.addEventListener("DOMContentLoaded", loadPlayers);
