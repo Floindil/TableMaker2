@@ -34,6 +34,9 @@ export function t(key) {
 }
 
 export function applyTranslations(root = document) {
+    if (!currentLanguage) {
+        currentLanguage = "en"
+    }
     document.documentElement.lang = currentLanguage;
 
     root.querySelectorAll("[data-i18n]").forEach((element) => {
