@@ -1,5 +1,5 @@
 [Unit]
-Description=TM2 FastAPI
+Description=Volleyball App API
 After=network.target
 
 [Service]
