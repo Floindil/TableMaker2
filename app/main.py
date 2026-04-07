@@ -1,11 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import players, teams
+from app.routers import auth, players, teams
 from app.core.db import Base, engine
-
-from app.models.player import Player
-from app.models.team import Team
-from app.models.team_player import TeamPlayer
 
 from app.routers import players, teams
 
@@ -25,6 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(players.router, prefix="/players", tags=["players"])
 app.include_router(teams.router, prefix="/teams", tags=["teams"])
 

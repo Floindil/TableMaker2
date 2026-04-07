@@ -5,7 +5,9 @@ export default {
         edit: "Bearbeiten",
         delete: "Löschen",
         close: "Schließen",
-        language: "Sprache"
+        language: "Sprache",
+        login: "Anmelden",
+        logout: "Abmelden"
     },
     messages: {
         noDataLoaded: "Noch keine Daten geladen."
@@ -17,7 +19,7 @@ export default {
         datePlaceholder: "DD.MM.JJJJ",
         license: "Lizenz",
         email: "E-Mail",
-        phone: "Telefon"
+        phone: "Telefon",
     },
     player: {
         title: "Spieler",

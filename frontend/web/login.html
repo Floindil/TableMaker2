@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title data-i18n="common.login"></title>
+    <link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+    <section class="card">
+        <form id="login-form" class="login-form">
+            <label>
+                <span data-i18n="field.email"></span>
+                <input type="email" name="email" required>
+            </label>
+
+            <label>
+                <span data-i18n="field.password"></span>
+                <input type="password" name="password" required>
+            </label>
+
+            <button type="submit" id="submit-button" data-i18n="common.login"></button>
+        </form>
+
+        <p id="message-box"></p>
+    </section>
+
+    <script type="module" src="js/pages/login-page.js"></script>
+</body>
+</html>

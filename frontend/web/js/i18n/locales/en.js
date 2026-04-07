@@ -5,7 +5,9 @@ export default {
         edit: "Edit",
         delete: "Delete",
         close: "Close",
-        language: "Language"
+        language: "Language",
+        login: "Login",
+        logout: "Logout"
     },
     messages: {
         noDataLoaded: "No data loaded yet."
