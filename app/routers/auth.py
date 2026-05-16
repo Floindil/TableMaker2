@@ -73,11 +73,15 @@ def refresh_token(payload: RefreshRequest, db: Session = Depends(get_db)):
         .first()
     )
 
-    if not stored_token or stored_token.revoked:
-        raise credentials_exception
+    expires_at = stored_token.expires_at
 
-    if stored_token.expires_at < datetime.now(timezone.utc):
-        raise credentials_exception
+    if expires_at.tzinfo is None:
+        expires_at = expires_at.replace(tzinfo=timezone.utc)
+
+    if expires_at < datetime.now(timezone.utc):
+        db.delete(stored_token)
+        db.commit()
+        raise HTTPException(status_code=401, detail="Refresh token abgelaufen")
 
     new_access_token = create_access_token(user_id)
     new_refresh_token = create_refresh_token(user_id)
