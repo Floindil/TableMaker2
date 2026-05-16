@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../api/auth";
+import { checkUserExists, login } from "../api/auth";
 import { useLanguage } from "../i18n/LanguageContext";
 import LanguageSwitcher from "../components/LanguageSwitcher";
 import React from "react";

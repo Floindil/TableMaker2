@@ -99,3 +99,11 @@ def refresh_token(payload: RefreshRequest, db: Session = Depends(get_db)):
         "refresh_token": new_refresh_token,
         "token_type": "bearer",
     }
+
+@router.get("/users/exists", response_model=bool)
+def check_user_exists(email: str, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.email == email).first()
+    
+    return {
+        "exists": user is not None
+    }
