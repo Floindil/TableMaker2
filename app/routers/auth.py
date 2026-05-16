@@ -6,11 +6,12 @@ from datetime import datetime, timedelta, timezone
 from app.core.db import get_db
 from app.core.config import settings
 from app.core.security import create_access_token, create_refresh_token
-from app.schemas.auth import LoginRequest, TokenResponse, RefreshRequest
+from app.models.user import User
+from app.schemas.auth import LoginRequest, TokenResponse, RefreshRequest, UserRead
 from app.services.auth_service import AuthService
 from app.models.refresh_token import RefreshToken
 
-router = APIRouter(prefix="/auth", tags=["auth"])
+router = APIRouter(tags=["auth"])
 service = AuthService()
 
 
@@ -39,7 +40,7 @@ def logout(payload: RefreshRequest, db: Session = Depends(get_db)):
 
     return {"message": "Erfolgreich ausgeloggt"}
 
-@router.post("/register")
+@router.post("/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)
 def register(payload: LoginRequest, db: Session = Depends(get_db)):
     user = service.register(db, payload.email, payload.password)
     if not user:

@@ -14,3 +14,10 @@ class TokenResponse(BaseModel):
 
 class RefreshRequest(BaseModel):
     refresh_token: str
+
+
+class UserRead(BaseModel):
+    id: int
+    email: EmailStr
+
+    model_config = {"from_attributes": True}

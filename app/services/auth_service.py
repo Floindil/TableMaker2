@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.models.user import User
 from app.models.refresh_token import RefreshToken
-from app.core.security import verify_password, create_access_token, create_refresh_token
+from app.core.security import verify_password, create_access_token, create_refresh_token, hash_password
 from app.core.config import settings
 
 
@@ -44,8 +44,13 @@ class AuthService:
         user = db.query(User).filter(User.email == email).first()
         if user:
             return None
-        
-        user = User(email=email, hashed_password=password)
+
+
+        user = User(
+            email=email,
+            hashed_password=hash_password(password)
+        )
+
         db.add(user)
         db.commit()
         db.refresh(user)

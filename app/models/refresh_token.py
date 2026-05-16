@@ -10,7 +10,7 @@ class RefreshToken(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
     token = Column(String, nullable=False, unique=True, index=True)
-    expires_at = Column(DateTime, nullable=False)
+    expires_at = Column(DateTime(timezone=True), nullable=False)
     revoked = Column(Boolean, default=False, nullable=False)
 
     user = relationship("User", back_populates="refresh_tokens")

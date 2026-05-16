@@ -3,10 +3,11 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
+from app.core.deps import get_current_user
 from app.schemas.team import TeamCreate, TeamRead, TeamAddPlayer
 from app.services.team_service import TeamService
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(get_current_user)])
 service = TeamService()
 
 DbSession = Annotated[Session, Depends(get_db)]
