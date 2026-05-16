@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import PlayersPage from "./pages/PlayersPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import React from "react";
 
 export default function App() {
   return (
@@ -16,7 +17,7 @@ export default function App() {
           </ProtectedRoute>
         }
       />
-      <Route path="*" element={<Navigate to="/players" replace />} />
+      <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 }

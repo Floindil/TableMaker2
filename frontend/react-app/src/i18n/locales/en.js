@@ -1,3 +1,5 @@
+import { login } from "../../api/auth";
+
 export default {
     common: {
         reload: "Reload",
@@ -19,13 +21,19 @@ export default {
         datePlaceholder: "DD.MM.YYYY",
         license: "License",
         email: "Email",
-        phone: "Phone"
+        phone: "Phone",
+        password: "Password"
     },
     player: {
         title: "Players",
         create: "Create player",
         notAvailable: "No players available.",
         update: "Update player"
+    },
+    alert: {
+        loginFailed: "Login failed",
+        noUser: "User does not exist",
+        userExists: "User already exists"
     },
     error: {
         load: "Error while loading",

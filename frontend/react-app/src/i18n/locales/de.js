@@ -1,3 +1,5 @@
+import { login } from "../../api/auth";
+
 export default {
     common: {
         reload: "Neu laden",
@@ -20,12 +22,18 @@ export default {
         license: "Lizenz",
         email: "E-Mail",
         phone: "Telefon",
+        password: "Passwort"
     },
     player: {
         title: "Spieler",
         create: "Spieler erstellen",
         notAvailable: "Keine Spieler vorhanden.",
         update: "Spieler aktualisieren"
+    },
+    alert: {
+        loginFailed: "Anmeldung fehlgeschlagen",
+        noUser: "Benutzer existiert nicht",
+        userExists: "Benutzer existiert bereits"
     },
     error: {
         load: "Fehler beim Laden",

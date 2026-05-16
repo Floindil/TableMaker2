@@ -39,3 +39,15 @@ class AuthService:
             "refresh_token": refresh_token,
             "token_type": "bearer",
         }
+    
+    def register(self, db: Session, email: str, password: str):
+        user = db.query(User).filter(User.email == email).first()
+        if user:
+            return None
+        
+        user = User(email=email, hashed_password=password)
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+
+        return user

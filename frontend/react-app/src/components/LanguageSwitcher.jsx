@@ -1,12 +1,17 @@
-import { useTranslation } from "react-i18next";
+import React from "react";
+import { languages } from "../i18n/index.js";
+import { useLanguage } from "../i18n/LanguageContext.jsx";
 
 export default function LanguageSwitcher() {
-  const { i18n } = useTranslation();
+  const { language, changeLanguage } = useLanguage();
 
   return (
-    <div style={{ marginBottom: "10px" }}>
-      <button onClick={() => i18n.changeLanguage("en")}>EN</button>
-      <button onClick={() => i18n.changeLanguage("de")}>DE</button>
-    </div>
+    <select value={language} onChange={(e) => changeLanguage(e.target.value)}>
+      {Object.entries(languages).map(([code, config]) => (
+        <option key={code} value={code}>
+          {config.label}
+        </option>
+      ))}
+    </select>
   );
 }

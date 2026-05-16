@@ -12,6 +12,12 @@ export async function login(loginData) {
   return data;
 }
 
+export async function checkUserExists(username) {
+  return await apiRequest(`/auth/users/exists?username=${encodeURIComponent(username)}`, {
+    method: "GET"
+  });
+}
+
 export async function logout() {
   const refreshToken = localStorage.getItem("refresh_token");
 
