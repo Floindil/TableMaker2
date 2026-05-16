@@ -7,13 +7,13 @@ import React from "react";
 import { t } from "../i18n/i18n";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
-      const userCheck = await checkUserExists(username);
+      const userCheck = await checkUserExists(email);
 
       if (!userCheck.exists) {
         alert(t("alert.noUser"));
@@ -21,7 +21,7 @@ export default function LoginPage() {
       }
 
       await login({
-        username,
+        email,
         password
       });
 
@@ -38,8 +38,8 @@ export default function LoginPage() {
       <h2>{t("common.login")}</h2>
       <input
         placeholder={t("field.email")}
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       />
       <input
         placeholder={t("field.password")}

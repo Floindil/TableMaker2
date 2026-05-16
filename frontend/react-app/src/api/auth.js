@@ -12,8 +12,8 @@ export async function login(loginData) {
   return data;
 }
 
-export async function checkUserExists(username) {
-  return await apiRequest(`/auth/users/exists?username=${encodeURIComponent(username)}`, {
+export async function checkUserExists(email) {
+  return await apiRequest(`/auth/users/exists?email=${encodeURIComponent(email)}`, {
     method: "GET"
   });
 }
