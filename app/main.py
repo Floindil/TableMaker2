@@ -3,6 +3,18 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routers import auth, players, teams
 from app.core.db import Base, engine
 
+from app.models.user import User
+from app.models.role import Role
+from app.models.user_role import UserRole
+from app.models.refresh_token import RefreshToken
+from app.models.player import Player
+from app.models.team import Team
+from app.models.team_player import TeamPlayer
+
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI()
+
 from app.routers import players, teams
 
 Base.metadata.create_all(bind=engine)
