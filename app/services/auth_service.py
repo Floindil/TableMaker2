@@ -21,6 +21,25 @@ class AuthService:
         if not user:
             return None
 
+        return self.create_tokens(db, user)
+    
+    def register(self, db: Session, email: str, password: str):
+        user = db.query(User).filter(User.email == email).first()
+        if user:
+            return None
+
+        user = User(
+            email=email,
+            hashed_password=hash_password(password)
+        )
+
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+
+        return self.create_tokens(db, user)
+    
+    def create_tokens(self, db: Session, user: User):
         access_token = create_access_token(user.id)
         refresh_token = create_refresh_token(user.id)
 
@@ -39,20 +58,3 @@ class AuthService:
             "refresh_token": refresh_token,
             "token_type": "bearer",
         }
-    
-    def register(self, db: Session, email: str, password: str):
-        user = db.query(User).filter(User.email == email).first()
-        if user:
-            return None
-
-
-        user = User(
-            email=email,
-            hashed_password=hash_password(password)
-        )
-
-        db.add(user)
-        db.commit()
-        db.refresh(user)
-
-        return user

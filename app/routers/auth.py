@@ -40,15 +40,15 @@ def logout(payload: RefreshRequest, db: Session = Depends(get_db)):
 
     return {"message": "Erfolgreich ausgeloggt"}
 
-@router.post("/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)
+@router.post("/register", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
 def register(payload: LoginRequest, db: Session = Depends(get_db)):
-    user = service.register(db, payload.email, payload.password)
-    if not user:
+    tokens = service.register(db, payload.email, payload.password)
+    if not tokens:
         raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="E-Mail wird bereits verwendet"
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Ungültige Zugangsdaten"
         )
-    return user
+    return tokens
 
 @router.post("/refresh", response_model=TokenResponse)
 def refresh_token(payload: RefreshRequest, db: Session = Depends(get_db)):

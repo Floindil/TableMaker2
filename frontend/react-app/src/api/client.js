@@ -9,12 +9,12 @@ export async function apiRequest(path, options = {}, retry = true) {
   const token = localStorage.getItem("access_token");
 
   const response = await fetch(`${API_BASE_URL}${path}`, {
+    ...options,
     headers: {
       "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...(options.headers || {})
+      ...(options.headers || {}),
     },
-    ...options
   });
 
   if (response.status === 401 && retry) {
@@ -41,7 +41,9 @@ export async function apiRequest(path, options = {}, retry = true) {
     const refreshData = await refreshResponse.json();
 
     localStorage.setItem("access_token", refreshData.access_token);
-    localStorage.setItem("refresh_token", refreshData.refresh_token);
+    if (refreshData.refresh_token) {
+      localStorage.setItem("refresh_token", refreshData.refresh_token);
+    }
 
     return apiRequest(path, options, false);
   }

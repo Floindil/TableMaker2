@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getPlayers, createPlayer } from "../api/players";
-import PlayerModal from "../components/PlayerModal";
+import PlayerModal from "../components/playerModal/PlayerModal";
 
 export default function PlayerPage() {
   const [players, setPlayers] = useState([]);

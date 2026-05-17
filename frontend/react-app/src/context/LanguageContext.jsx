@@ -4,7 +4,7 @@ import {
   getCurrentLanguage,
   setLanguage as setI18nLanguage,
   t,
-} from "./i18n";
+} from "../i18n/i18n";
 
 const LanguageContext = createContext();
 

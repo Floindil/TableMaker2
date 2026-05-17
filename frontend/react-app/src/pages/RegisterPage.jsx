@@ -1,37 +1,42 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import LanguageSwitcher from "../components/slideMenu/LanguageSwitcher";
-import React from "react";
 import { useAuth } from "../context/AuthContext";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const { t } = useLanguage();
-  const { login } = useAuth();
+  const { register } = useAuth()
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleRegistration = async () => {
     try {
-      await login(email, password);
-
-      navigate("/players");
-    } catch (err) {
-      if (err.message === "NO_USER") {
-        alert(t("alert.noUser"));
-        return;
+      if (password != confirmPassword) {
+        alert(t("alert.passwordMissmatch"));
+        return
       }
 
-      alert(t("alert.loginFailed"));
+      await register(email, password)
+
+      navigate("/players");
+
+    } catch (err) {
+      if (err.message === "USER_EXISTS") {
+        alert(t("alert.userExists"))
+        return
+      }
+      alert(t("alert.registrationFailed"));
     }
   };
 
   return (
     <div className="container">
-      <h2>{t("common.login")}</h2>
+      <h2>{t("common.registration")}</h2>
       <input
         placeholder={t("field.email")}
         value={email}
@@ -43,7 +48,13 @@ export default function LoginPage() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleLogin}>{t("common.login")}</button>
+      <input
+        placeholder={t("field.confirmPassword")}
+        type="password"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+      />
+      <button onClick={handleRegistration}>{t("common.register")}</button>
     </div>
   );
 }

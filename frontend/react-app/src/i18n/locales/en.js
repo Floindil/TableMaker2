@@ -1,7 +1,6 @@
-import { login } from "../../api/auth";
-
 export default {
     common: {
+        menu: "Menu",
         reload: "Reload",
         actions: "Actions",
         edit: "Edit",
@@ -9,10 +8,12 @@ export default {
         close: "Close",
         language: "Language",
         login: "Login",
-        logout: "Logout"
+        logout: "Logout",
+        registration: "Registration",
+        register: "Register"
     },
     messages: {
-        noDataLoaded: "No data loaded yet."
+        noDataLoaded: "No data loaded yet"
     },
     field: {
         firstName: "First name",
@@ -22,18 +23,22 @@ export default {
         license: "License",
         email: "Email",
         phone: "Phone",
-        password: "Password"
+        password: "Password",
+        confirmPassword: "Confirm password"
     },
     player: {
         title: "Players",
         create: "Create player",
-        notAvailable: "No players available.",
+        notAvailable: "No players available",
         update: "Update player"
     },
     alert: {
         loginFailed: "Login failed",
+        logoutFailed: "Logout failed",
+        registrationFailed: "Registration failed",
         noUser: "User does not exist",
-        userExists: "User already exists"
+        userExists: "User already exists",
+        passwordMissmatch: "Passwords do not match"
     },
     error: {
         load: "Error while loading",
