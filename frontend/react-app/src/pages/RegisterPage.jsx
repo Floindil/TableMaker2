@@ -14,7 +14,9 @@ export default function RegisterPage() {
 
   const navigate = useNavigate();
 
-  const handleRegistration = async () => {
+  const handleRegistration = async (e) => {
+    e.preventDefault();
+
     try {
       if (password != confirmPassword) {
         alert(t("alert.passwordMissmatch"));
@@ -37,24 +39,26 @@ export default function RegisterPage() {
   return (
     <div className="container">
       <h2>{t("common.registration")}</h2>
-      <input
-        placeholder={t("field.email")}
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        placeholder={t("field.password")}
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <input
-        placeholder={t("field.confirmPassword")}
-        type="password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-      />
-      <button onClick={handleRegistration}>{t("common.register")}</button>
+      <form onSubmit={handleRegistration}>
+        <input id="email" name="email" type="email" autoComplete="email"
+          placeholder={t("field.email")}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input id="password" name="password" type="password" autoComplete="new-password"
+          placeholder={t("field.password")}
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <input id="confirmPassword" name="confirmPassword" type="password" autoComplete="new-password"
+          placeholder={t("field.confirmPassword")}
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+        <button type="submit">{t("common.register")}</button>
+      </form>
     </div>
   );
 }

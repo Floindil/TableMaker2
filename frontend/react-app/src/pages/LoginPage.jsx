@@ -14,7 +14,9 @@ export default function LoginPage() {
 
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
     try {
       await login(email, password);
 
@@ -32,18 +34,20 @@ export default function LoginPage() {
   return (
     <div className="container">
       <h2>{t("common.login")}</h2>
-      <input
-        placeholder={t("field.email")}
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        placeholder={t("field.password")}
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>{t("common.login")}</button>
+      <form onSubmit={handleLogin}>
+        <input id="email" name="email" type="email" autoComplete="email"
+          placeholder={t("field.email")}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input id="password" name="password" type="password" autoComplete="current-password"
+          placeholder={t("field.password")}
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">{t("common.login")}</button>
+      </form>
     </div>
   );
 }
