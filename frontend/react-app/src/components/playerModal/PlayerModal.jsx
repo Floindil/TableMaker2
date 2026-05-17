@@ -1,25 +1,75 @@
 import { useState } from "react";
+import { useLanguage } from "../../context/LanguageContext";
 
-export default function PlayerModal({ onClose, onSave }) {
-  const [name, setName] = useState("");
 
-  const handleSubmit = () => {
-    if (!name) return;
-    onSave({ name });
+export default function PlayerModal({ onClose, onSave, player }) {
+  const { t } = useLanguage();
+  const [firstName, setFirstName] = useState(player.prename);
+  const [lastName, setLastName] = useState(player.lastname);
+  const [birthdate, setBirthdate] = useState(player.birthdate);
+  const [email, setEmail] = useState(player.email);
+  const [phone, setPhone] = useState(player.phone);
+  const [license, setLicense] = useState(player.license);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!firstName) return;
+
+    onSave({
+      prename: firstName,
+      lastname: lastName,
+      birthdate: birthdate,
+      email: email,
+      phone: phone,
+      license: license,
+    });
+
     onClose();
   };
 
   return (
     <div style={overlay}>
       <div style={modal}>
-        <h3>New Player</h3>
-        <input
-          placeholder="Player name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <button onClick={handleSubmit}>Save</button>
-        <button onClick={onClose}>Cancel</button>
+        <h3>{player.id ? t("player.edit") : t("player.create")}</h3>
+        <form onSubmit={handleSubmit}>
+          <input
+            placeholder={t("field.firstName")}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          <input
+            placeholder={t("field.lastName")}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+          <input
+            placeholder={t("field.birthdate") + " " + t("field.datePlaceholder")}
+            value={birthdate}
+            onChange={(e) => setBirthdate(e.target.value)}
+          />
+          <input
+            placeholder={t("field.email")}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            placeholder={t("field.phone")}
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+          <input
+            placeholder={t("field.license")}
+            value={license}
+            onChange={(e) => setLicense(e.target.value)}
+          />
+          <button type="submit">
+            {t("common.accept")}
+          </button>
+          <button type="Button" onClick={onClose}>
+            {t("common.cancel")}
+          </button>
+        </form>
       </div>
     </div>
   );

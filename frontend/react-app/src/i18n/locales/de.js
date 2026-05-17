@@ -6,6 +6,8 @@ export default {
         actions: "Aktionen",
         edit: "Bearbeiten",
         delete: "Löschen",
+        accept: "Akzeptieren",
+        cancel: "Abbrechen",
         close: "Schließen",
         language: "Sprache",
         login: "Anmelden",

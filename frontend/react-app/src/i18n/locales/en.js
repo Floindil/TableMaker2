@@ -6,6 +6,8 @@ export default {
         actions: "Actions",
         edit: "Edit",
         delete: "Delete",
+        accept: "Accept",
+        cancel: "Cancel",
         close: "Close",
         language: "Language",
         login: "Login",

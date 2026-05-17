@@ -78,3 +78,30 @@ input {
   pointer-events: none;
   opacity: 0.7;
 }
+
+/* Tables */
+th {
+  text-align: left;
+  padding: 2px 15px;
+}
+
+td {
+  padding: 2px 15px;
+}
+
+.button-cell {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.button-cell-button {
+  padding: 0px;
+  color: black;
+  background: transparent;
+}
+
+.separator {
+  margin: 10px 0;
+  border-top: 2px solid #eee;
+}
