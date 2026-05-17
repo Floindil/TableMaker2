@@ -1,5 +1,6 @@
 export default {
     common: {
+        home: "Home",
         menu: "Menu",
         reload: "Reload",
         actions: "Actions",

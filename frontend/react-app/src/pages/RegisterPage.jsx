@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
-import LanguageSwitcher from "../components/slideMenu/LanguageSwitcher";
 import { useAuth } from "../context/AuthContext";
 
 export default function RegisterPage() {
@@ -25,7 +24,7 @@ export default function RegisterPage() {
 
       await register(email, password)
 
-      navigate("/players");
+      navigate("/");
 
     } catch (err) {
       if (err.message === "USER_EXISTS") {

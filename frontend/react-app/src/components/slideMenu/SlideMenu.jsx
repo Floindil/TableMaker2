@@ -1,6 +1,6 @@
 // src/components/MenuButton.jsx
 import React, { useState } from "react";
-import "./SlideMenu.css";
+import { Menu, House } from "lucide-react";
 import LanguageSwitcher from "./LanguageSwitcher.jsx";
 import PageNavigator from "./PageNavigator.jsx";
 import { useLanguage } from "../../context/LanguageContext.jsx";
@@ -31,7 +31,17 @@ export default function SlideMenu() {
     return (
     <>
         <button className="menu-button" onClick={() => setOpen(true)}>
-        ☰ {t("common.menu")}
+            <div className="icon-button">
+                <Menu size={18}/> 
+                <span className="button-text">{t("common.menu")}</span>
+            </div>
+        </button>
+
+        <button className="menu-button" onClick={() => navigate("/")}>
+            <div className="icon-button">
+                <House size={18}/> 
+                <span className="button-text">{t("common.home")}</span>
+            </div>
         </button>
 
         {open && <div className="menu-backdrop" onClick={() => setOpen(false)} />}

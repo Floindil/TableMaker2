@@ -6,7 +6,6 @@ import { useAuth } from "../../context/AuthContext";
 
 export default function PageNavigator({ closeMenu }) {
   const { t } = useLanguage();
-  const [open, setOpen] = useState(false);
   const location = useLocation();
 
   const { isLoggedIn } = useAuth();
@@ -24,7 +23,7 @@ export default function PageNavigator({ closeMenu }) {
   const links = isLoggedIn ? privateLinks : publicLinks;
 
   return (
-    <nav>
+    <nav className="nav-list">
         {links.map((link) => {
         const isCurrentPage = location.pathname === link.path;
 
@@ -33,17 +32,21 @@ export default function PageNavigator({ closeMenu }) {
             key={link.path}
             to={link.path}
             onClick={(e) => {
-                if (isCurrentPage) {
+              if (isCurrentPage) {
                 e.preventDefault();
                 return;
-                }
+              }
 
-                closeMenu();
+              closeMenu();
             }}
-            className={isCurrentPage ? "active disabled" : ""}
-            >
+            className={({ isActive }) =>
+              isActive
+                ? "nav-link active disabled"
+                : "nav-link"
+            }
+          >
             {link.label}
-            </NavLink>
+          </NavLink>
         );
         })}
     </nav>

@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import PlayersPage from "./pages/PlayersPage";
+import HomePage from "./pages/HomePage";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import React from "react";
 import SlideMenu from "./components/slideMenu/SlideMenu";
@@ -12,17 +13,10 @@ export default function App() {
     <>
       <SlideMenu />
       <Routes>
-        <Route path="/" element={<Navigate to="/players" replace />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-        <Route
-          path="/players"
-          element={
-            <ProtectedRoute>
-              <PlayersPage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/players"  element={<ProtectedRoute><PlayersPage /></ProtectedRoute>}/>
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </>

@@ -28,6 +28,17 @@ button:hover {
   background-color: #1c60c7;
 }
 
+.button-text {
+  padding: 5px;
+}
+
+.icon-button {
+  min-width: 90px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
 input {
   padding: 8px;
   margin: 5px;
@@ -39,4 +50,31 @@ input {
   padding: 15px;
   margin-bottom: 10px;
   border-radius: 6px;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nav-link {
+  padding: 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: black;
+}
+
+.nav-link:hover {
+  background: #ececec;
+}
+
+.nav-link.active {
+  background: #dcdcdc;
+  font-weight: bold;
+}
+
+.nav-link.disabled {
+  pointer-events: none;
+  opacity: 0.7;
 }

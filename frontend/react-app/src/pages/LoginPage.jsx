@@ -1,8 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
-import LanguageSwitcher from "../components/slideMenu/LanguageSwitcher";
-import React from "react";
 import { useAuth } from "../context/AuthContext";
 
 export default function LoginPage() {
@@ -20,7 +18,7 @@ export default function LoginPage() {
     try {
       await login(email, password);
 
-      navigate("/players");
+      navigate("/");
     } catch (err) {
       if (err.message === "NO_USER") {
         alert(t("alert.noUser"));
