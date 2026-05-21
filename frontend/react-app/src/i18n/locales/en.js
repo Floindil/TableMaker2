@@ -31,9 +31,13 @@ export default {
     },
     player: {
         title: "Players",
-        create: "Create player",
-        notAvailable: "No players available",
-        update: "Update player"
+        create: "create Player"
+    },
+    team: {
+        title: "Teams",
+        name: "Teamname",
+        coach: "Coach",
+        create: "create Team"
     },
     alert: {
         loginFailed: "Login failed",

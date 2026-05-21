@@ -2,13 +2,13 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from app.repositories.team_repository import TeamRepository
-from app.repositories.player_repository import PlayerRepository
+from app.repositories.person_repository import PersonRepository
 
 
 class TeamService:
     def __init__(self):
         self.team_repo = TeamRepository()
-        self.player_repo = PlayerRepository()
+        self.person_repo = PersonRepository()
 
     def list_teams(self, db: Session):
         return self.team_repo.list_all(db)
@@ -20,21 +20,24 @@ class TeamService:
         return self.team_repo.create(
             db,
             name=payload.name,
-            league=payload.league
+            abbreviation=payload.abbreviation,
+            league=payload.league,
+            creator_id=payload.creator_id,
+            club_id=payload.club_id
         )
 
-    def add_player_to_team(self, db: Session, team_id: int, payload):
+    def add_person_to_team(self, db: Session, team_id: int, payload):
         team = self.team_repo.get_by_id(db, team_id)
         if not team:
             raise HTTPException(status_code=404, detail="Team nicht gefunden")
 
-        player = self.player_repo.get_by_id(db, payload.player_id)
-        if not player:
+        person = self.person_repo.get_by_id(db, payload.person_id)
+        if not person:
             raise HTTPException(status_code=404, detail="Spieler nicht gefunden")
 
-        return self.team_repo.add_player_to_team(
+        return self.team_repo.add_person_to_team(
             db,
             team_id=team_id,
-            player_id=payload.player_id,
-            player_number=payload.player_number
+            person_id=payload.person_id,
+            person_number=payload.person_number
         )

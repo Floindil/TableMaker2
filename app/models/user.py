@@ -12,3 +12,9 @@ class User(Base):
 
     refresh_tokens = relationship("RefreshToken", back_populates="user", cascade="all, delete-orphan")
     user_roles = relationship("UserRole", back_populates="user", cascade="all, delete-orphan")
+    club_users = relationship("ClubUser", back_populates="user", cascade="all, delete-orphan")
+
+    people = relationship("Person", back_populates="creator")
+    teams = relationship("Team", back_populates="creator")
+    clubs = relationship("Club", back_populates="owner")
+    tournaments = relationship("Tournament", back_populates="creator")

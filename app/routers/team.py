@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.core.db import get_db
 from app.core.deps import get_current_user
-from app.schemas.team import TeamCreate, TeamRead, TeamAddPlayer
+from app.schemas.team import TeamCreate, TeamRead, TeamUpdate, TeamAddPerson
 from app.services.team_service import TeamService
 
 router = APIRouter(dependencies=[Depends(get_current_user)])
@@ -31,9 +31,19 @@ def create_team(payload: TeamCreate, db: DbSession):
     return service.create_team(db, payload)
 
 
-@router.post("/{team_id}/players", status_code=201)
-def add_player_to_team(team_id: int, payload: TeamAddPlayer, db: DbSession):
-    link = service.add_player_to_team(db, team_id, payload)
+@router.patch("/{team_id}", response_model=TeamRead)
+def update_team(team_id: int, payload: TeamUpdate, db: DbSession):
+    return service.update_team(db, team_id, payload)
+
+
+@router.delete("/{team_id}", status_code=204)
+def delete_team(team_id: int, db: DbSession):
+    service.delete_team(db, team_id)
+
+
+@router.post("/{team_id}/people", status_code=201)
+def add_person_to_team(team_id: int, payload: TeamAddPerson, db: DbSession):
+    link = service.add_person_to_team(db, team_id, payload)
     return {
         "message": "Spieler zum Team hinzugefügt",
         "link_id": link.id

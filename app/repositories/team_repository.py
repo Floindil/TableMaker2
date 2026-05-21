@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.models.team import Team
-from app.models.team_player import TeamPlayer
+from app.models.team_person import TeamPlayer
 
 
 class TeamRepository:

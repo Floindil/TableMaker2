@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr, field_validator
 
 
-class PlayerCreate(BaseModel):
+class PersonCreate(BaseModel):
     prename: str
     lastname: str
     birthdate: str | None = None
@@ -18,7 +18,7 @@ class PlayerCreate(BaseModel):
         return value
 
 
-class PlayerRead(BaseModel):
+class PersonRead(BaseModel):
     id: int
     prename: str
     lastname: str
@@ -29,7 +29,8 @@ class PlayerRead(BaseModel):
 
     model_config = {"from_attributes": True}
 
-class PlayerUpdate(BaseModel):
+
+class PersonUpdate(BaseModel):
     prename: str | None = None
     lastname: str | None = None
     birthdate: str | None = None

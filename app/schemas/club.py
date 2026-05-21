@@ -1,35 +1,37 @@
 from pydantic import BaseModel, field_validator
 
 
-class TeamCreate(BaseModel):
+class ClubCreate(BaseModel):
     name: str
-    league: str | None = None
     abbreviation: str | None = None
     creator_id: int
-    club_id: int | None = None
 
 
-class TeamRead(BaseModel):
+class ClubRead(BaseModel):
     id: int
     name: str
-    league: str | None = None
     abbreviation: str | None = None
     creator_id: int
-    club_id: int | None = None
 
     model_config = {"from_attributes": True}
 
 
-class TeamAddPerson(BaseModel):
+class ClubAddPerson(BaseModel):
     person_id: int
 
 
-class TeamUpdate(BaseModel):
+class ClubAddUser(BaseModel):
+    user_id: int
+
+
+class ClubAddTeam(BaseModel):
+    team_id: int
+
+
+class ClubUpdate(BaseModel):
     name: str
-    league: str | None = None
     abbreviation: str | None = None
     creator_id: int
-    club_id: int | None = None
 
     @field_validator("name")
     @classmethod

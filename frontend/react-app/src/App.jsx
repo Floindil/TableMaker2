@@ -7,6 +7,7 @@ import React from "react";
 import SlideMenu from "./components/slideMenu/SlideMenu";
 import RegisterPage from "./pages/RegisterPage";
 import LanguageSwitcher from "./components/slideMenu/LanguageSwitcher";
+import TeamsPage from "./pages/TeamsPage";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/players"  element={<ProtectedRoute><PlayersPage /></ProtectedRoute>}/>
+        <Route path="/teams"  element={<ProtectedRoute><TeamsPage /></ProtectedRoute>}/>
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </>

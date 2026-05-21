@@ -13,7 +13,7 @@ export default {
         login: "Anmelden",
         logout: "Abmelden",
         registration: "Registration",
-        register: "Registrieren"
+        register: "Registrieren",
     },
     messages: {
         noDataLoaded: "Noch keine Daten geladen"
@@ -31,9 +31,13 @@ export default {
     },
     player: {
         title: "Spieler",
-        create: "Spieler erstellen",
-        notAvailable: "Keine Spieler vorhanden",
-        update: "Spieler aktualisieren"
+        create: "Spieler hinzufügen"
+    },
+    team: {
+        title: "Teams",
+        name: "Teamname",
+        coach: "Trainer",
+        create: "Team erstellen"
     },
     alert: {
         loginFailed: "Anmeldung fehlgeschlagen",
