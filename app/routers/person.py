@@ -33,8 +33,7 @@ def create_person(
     db: DbSession,
     current_user: User = Depends(get_current_user)
 ):
-    payload.creator_id = current_user.id
-    return service.create_person(db, **payload.model_dump())
+    return service.create_person(db, payload, current_user.id)
 
 
 @router.patch("/{person_id}", response_model=PersonRead)

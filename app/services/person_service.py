@@ -14,7 +14,7 @@ class PersonService:
     def get_person(self, db: Session, person_id: int):
         return self.repo.get_by_id(db, person_id)
 
-    def create_person(self, db: Session, payload):
+    def create_person(self, db: Session, payload, current_user_id):
         return self.repo.create(
             db,
             prename=payload.prename,
@@ -23,7 +23,7 @@ class PersonService:
             email=payload.email,
             phone=payload.phone,
             license=payload.license,
-            creator_id=payload.creator_id
+            creator_id=current_user_id
         )
     
     def update_person(self, db: Session, person_id: int, payload: PersonUpdate):
