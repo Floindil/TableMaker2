@@ -2,13 +2,13 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from app.repositories.tournament_repository import TournamentRepository
-from app.repositories.team_repository import PersonRepository
+from app.repositories.team_repository import TeamRepository
 
 
 class TournamentService:
     def __init__(self):
         self.tournament_repo = TournamentRepository()
-        self.team_repo = PersonRepository()
+        self.team_repo = TeamRepository()
 
     def list_tournaments(self, db: Session):
         return self.tournament_repo.list_all(db)

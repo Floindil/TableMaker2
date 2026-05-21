@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.models.team import Team
-from app.models.team_person import TeamPlayer
+from app.models.team_person import TeamPerson
 
 
 class TeamRepository:
@@ -23,8 +23,8 @@ class TeamRepository:
         team_id: int,
         player_id: int,
         player_number: int | None = None
-    ) -> TeamPlayer:
-        link = TeamPlayer(
+    ) -> TeamPerson:
+        link = TeamPerson(
             team_id=team_id,
             player_id=player_id,
             player_number=player_number
