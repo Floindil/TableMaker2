@@ -15,4 +15,4 @@ class Tournament(Base):
     creator = relationship("User", back_populates="tournaments")
     organizer_club = relationship("Club", back_populates="organized_tournaments")
 
-    tournament_teams = relationship("TeamTournament", back_populates="tournament", cascade="all, delete-orphan")
+    tournament_teams = relationship("TournamentTeam", back_populates="tournament", cascade="all, delete-orphan")
