@@ -7,7 +7,7 @@ from app.core.db import get_db
 from app.core.config import settings
 from app.core.security import create_access_token, create_refresh_token
 from app.models.user import User
-from app.schemas.auth import LoginRequest, TokenResponse, RefreshRequest, UserRead
+from app.schemas.auth import LoginRequest, TokenResponse, RefreshRequest
 from app.services.auth_service import AuthService
 from app.models.refresh_token import RefreshToken
 

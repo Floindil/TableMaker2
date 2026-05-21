@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.core.db import get_db
 from app.core.deps import get_current_user
-from app.schemas.tournament import TournamentCreate, TournamentRead, TournamentUpdate, TournamentAddPerson
+from app.schemas.tournament import TournamentCreate, TournamentRead, TournamentUpdate, TournamentAddTeam
 from app.services.tournament_service import TournamentService
 
 router = APIRouter(dependencies=[Depends(get_current_user)])
@@ -42,7 +42,7 @@ def delete_tournament(tournament_id: int, db: DbSession):
 
 
 @router.post("/{tournament_id}/teams", status_code=201)
-def add_team_to_tournament(tournament_id: int, payload: TournamentAddPerson, db: DbSession):
+def add_team_to_tournament(tournament_id: int, payload: TournamentAddTeam, db: DbSession):
     link = service.add_team_to_tournament(db, tournament_id, payload)
     return {
         "message": "Team zum Tournament hinzugefügt",

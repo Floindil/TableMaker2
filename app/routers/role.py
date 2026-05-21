@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.core.db import get_db
 from app.core.deps import get_current_user
-from app.schemas.role import RoleCreate, RoleRead, RoleUpdate, RoleAddPerson
+from app.schemas.role import RoleCreate, RoleRead, RoleUpdate
 from app.services.role_service import RoleService
 
 router = APIRouter(dependencies=[Depends(get_current_user)])
