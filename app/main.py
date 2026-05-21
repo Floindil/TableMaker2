@@ -43,7 +43,7 @@ app.add_middleware(
 
 app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(user.router, prefix="/users", tags=["users"])
-app.include_router(person.router, prefix="/players", tags=["players"])
+app.include_router(person.router, prefix="/people", tags=["people"])
 app.include_router(team.router, prefix="/teams", tags=["teams"])
 app.include_router(club.router, prefix="/clubs", tags=["clubs"])
 app.include_router(tournament.router, prefix="/tournaments", tags=["tournaments"])
