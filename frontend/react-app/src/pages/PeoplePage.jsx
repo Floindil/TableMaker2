@@ -104,14 +104,7 @@ export default function PersonPage() {
         <PersonModal
           onClose={closeModal}
           onSave={selectedPerson ? handleUpdate : handleCreate}
-          person={selectedPerson ?? {
-            prename: "",
-            lastname: "",
-            birthdate: "",
-            email: "",
-            phone: "",
-            license: "",
-          }}
+          person={selectedPerson ?? null}
         />
       )}
     </div>

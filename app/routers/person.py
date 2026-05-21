@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.core.db import get_db
 from app.core.deps import get_current_user
+from app.models.user import User
 from app.schemas.person import PersonCreate, PersonRead, PersonUpdate
 from app.services.person_service import PersonService
 
@@ -27,8 +28,13 @@ def get_person(person_id: int, db: DbSession):
 
 
 @router.post("/", response_model=PersonRead, status_code=201)
-def create_person(payload: PersonCreate, db: DbSession):
-    return service.create_person(db, payload)
+def create_person(
+    payload: PersonCreate,
+    db: DbSession,
+    current_user: User = Depends(get_current_user)
+):
+    payload.creator_id = current_user.id
+    return service.create_person(db, **payload.model_dump())
 
 
 @router.patch("/{person_id}", response_model=PersonRead)

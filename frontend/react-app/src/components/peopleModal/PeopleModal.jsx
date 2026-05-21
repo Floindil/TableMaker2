@@ -2,14 +2,26 @@ import { useState } from "react";
 import { useLanguage } from "../../context/LanguageContext";
 
 
-export default function PlayerModal({ onClose, onSave, player }) {
+export default function PlayerModal({ onClose, onSave, person }) {
   const { t } = useLanguage();
-  const [firstName, setFirstName] = useState(player.prename);
-  const [lastName, setLastName] = useState(player.lastname);
-  const [birthdate, setBirthdate] = useState(player.birthdate);
-  const [email, setEmail] = useState(player.email);
-  const [phone, setPhone] = useState(player.phone);
-  const [license, setLicense] = useState(player.license);
+
+  if (!person) {
+    person = {
+      prename: "",
+      lastname: "",
+      birthdate: "",
+      email: "",
+      phone: "",
+      license: "",
+    }
+  }
+
+  const [firstName, setFirstName] = useState(person.prename);
+  const [lastName, setLastName] = useState(person.lastname);
+  const [birthdate, setBirthdate] = useState(person.birthdate);
+  const [email, setEmail] = useState(person.email);
+  const [phone, setPhone] = useState(person.phone);
+  const [license, setLicense] = useState(person.license);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +43,7 @@ export default function PlayerModal({ onClose, onSave, player }) {
   return (
     <div style={overlay}>
       <div style={modal}>
-        <h3>{player.id ? t("player.edit") : t("player.create")}</h3>
+        <h3>{person.id ? t("person.edit") : t("person.create")}</h3>
         <form onSubmit={handleSubmit}>
           <input
             placeholder={t("field.firstName")}
