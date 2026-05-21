@@ -16,7 +16,7 @@ export default function PageNavigator({ closeMenu }) {
   ];
 
   const privateLinks = [
-    { path: "/players", label: t("player.title") },
+    { path: "/people", label: t("person.title") },
     { path: "/teams", label: t("team.title") },
   ];
 

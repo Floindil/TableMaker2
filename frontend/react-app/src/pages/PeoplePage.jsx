@@ -1,48 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { Trash, SquarePen } from "lucide-react";
-import { getPlayers, createPlayer, deletePlayer, updatePlayer } from "../api/players";
-import PlayerModal from "../components/playerModal/PlayerModal";
+import { getPeople, createPerson, deletePerson, updatePerson } from "../api/people";
+import PersonModal from "../components/personModal/PersonModal";
 import { useLanguage } from "../context/LanguageContext";
 
-export default function PlayerPage() {
+export default function PersonPage() {
   const { t } = useLanguage()
 
-  const [players, setPlayers] = useState([]);
+  const [people, setPeople] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [selectedPerson, setSelectedPerson] = useState(null);
 
-  const loadPlayers = async () => {
-    const data = await getPlayers();
-    setPlayers(data);
+  const loadPeople = async () => {
+    const data = await getPeople();
+    setPeople(data);
   };
 
   useEffect(() => {
-    loadPlayers();
+    loadPeople();
   }, []);
 
-  const handleCreate = async (player) => {
-    await createPlayer(player);
-    loadPlayers();
+  const handleCreate = async (person) => {
+    await createPerson(person);
+    loadPeople();
   };
 
-  const handleUpdate = async (player) => {
-    await updatePlayer(selectedPlayer.id, player);
-    loadPlayers();
+  const handleUpdate = async (person) => {
+    await updatePerson(selectedPerson.id, person);
+    loadPeople();
   };
 
-  const handleDelete = async (playerId) => {
-    await deletePlayer(playerId);
-    loadPlayers()
+  const handleDelete = async (personId) => {
+    await deletePerson(personId);
+    loadPeople()
   };
 
-  const handleEdit = async (player) => {
-    setSelectedPlayer(player);
+  const handleEdit = async (person) => {
+    setSelectedPerson(person);
     setShowModal(true);
   };
 
   const closeModal = () => {
     setShowModal(false);
-    setSelectedPlayer(null);
+    setSelectedPerson(null);
   };
 
   const columns = [
@@ -57,13 +57,13 @@ export default function PlayerPage() {
 
   return (
     <div className="container">
-      <h2>{t("player.title")}</h2>
+      <h2>{t("person.title")}</h2>
 
       <button onClick={() => {
-        setSelectedPlayer(null);
+        setSelectedPerson(null);
         setShowModal(true);
       }}>
-        {t("player.create")}
+        {t("person.create")}
       </button>
 
       <table>
@@ -79,7 +79,7 @@ export default function PlayerPage() {
         </thead>
 
         <tbody>
-          {players.map((p) => (
+          {people.map((p) => (
             <tr key={p.id}>
               <td>{p.prename}</td>
               <td>{p.lastname}</td>
@@ -101,10 +101,10 @@ export default function PlayerPage() {
       </table>
 
       {showModal && (
-        <PlayerModal
+        <PersonModal
           onClose={closeModal}
-          onSave={selectedPlayer ? handleUpdate : handleCreate}
-          player={selectedPlayer ?? {
+          onSave={selectedPerson ? handleUpdate : handleCreate}
+          person={selectedPerson ?? {
             prename: "",
             lastname: "",
             birthdate: "",

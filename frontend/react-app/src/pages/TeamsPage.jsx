@@ -46,7 +46,7 @@ export default function TeamsPage() {
   const columns = [
     {label: t("team.name"), key: "name"},
     {label: t("team.coach"), key: "coach"},
-    {label: t("player.title"), key: "playerAmount"}
+    {label: t("person.title"), key: "personAmount"}
   ]
 
   return (

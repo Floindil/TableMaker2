@@ -29,9 +29,9 @@ export default {
         password: "Passwort",
         confirmPassword: "Passwort bestätigen"
     },
-    player: {
-        title: "Spieler",
-        create: "Spieler hinzufügen"
+    person: {
+        title: "Personen",
+        create: "Person hinzufügen"
     },
     team: {
         title: "Teams",

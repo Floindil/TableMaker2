@@ -29,9 +29,9 @@ export default {
         password: "Password",
         confirmPassword: "Confirm password"
     },
-    player: {
-        title: "Players",
-        create: "create Player"
+    person: {
+        title: "People",
+        create: "create Person"
     },
     team: {
         title: "Teams",
