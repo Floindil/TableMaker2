@@ -13,7 +13,7 @@ class Club(Base):
 
     owner = relationship("User", back_populates="clubs")
 
-    teams = relationship("Club", back_populates="club")
+    teams = relationship("Team", back_populates="club")
     roles = relationship("Role", back_populates="club", cascade="all, delete-orphan")
     club_users = relationship("ClubUser", back_populates="club", cascade="all, delete-orphan")
     club_people = relationship("ClubPerson", back_populates="club", cascade="all, delete-orphan")

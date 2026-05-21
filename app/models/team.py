@@ -18,5 +18,4 @@ class Team(Base):
     club = relationship("Club", back_populates="teams")
 
     team_people = relationship("TeamPerson", back_populates="team", cascade="all, delete-orphan")
-    club_teams = relationship("ClubTeam", back_populates="team", cascade="all, delete-orphan")
     tournament_teams = relationship("TournamentTeam", back_populates="team", cascade="all, delete-orphan")

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Trash, SquarePen } from "lucide-react";
-import { getPeople, createPerson, deletePerson, updatePerson } from "../api/people";
-import PersonModal from "../components/personModal/PersonModal";
+import PersonModal from "../components/peopleModal/PeopleModal";
 import { useLanguage } from "../context/LanguageContext";
+import { createPerson, deletePerson, getPeople, updatePerson } from "../api/poeple";
 
 export default function PersonPage() {
   const { t } = useLanguage()
