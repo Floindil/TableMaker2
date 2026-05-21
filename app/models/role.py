@@ -12,5 +12,5 @@ class Role(Base):
     
     club_id = Column(Integer, ForeignKey("clubs.id"), nullable=False)
 
-    club = relationship("Club", back_populates="roles", cascade="all, delete-orphan")
+    club = relationship("Club", back_populates="roles")
     user_roles = relationship("UserRole", back_populates="role", cascade="all, delete-orphan")
