@@ -12,11 +12,11 @@ router = APIRouter(dependencies=[Depends(get_current_user)])
 service = PersonService()
 
 DbSession = Annotated[Session, Depends(get_db)]
-current_user = Annotated[User, Depends(get_current_user)]
+CurrentUser = Annotated[User, Depends(get_current_user)]
 
 
 @router.get("/", response_model=list[PersonRead])
-def list_people(db: DbSession, current_user: User):
+def list_people(db: DbSession, current_user: CurrentUser):
     return service.list_people(db, current_user.id)
 
 
