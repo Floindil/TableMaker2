@@ -40,9 +40,9 @@ button:hover {
 }
 
 input {
-  padding: 8px;
-  margin: 5px;
+  padding: 3px;
   width: 100%;
+  border-radius: 6px;
 }
 
 .card {
@@ -93,15 +93,23 @@ td {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
 }
 
 .button-cell-button {
   padding: 0px;
   color: black;
   background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .separator {
   margin: 10px 0;
   border-top: 2px solid #eee;
+}
+
+.table-cell {
+  padding: 0px 0px 0px 5px;
 }
