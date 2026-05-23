@@ -1,5 +1,6 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
+from app.models.user import User
 from app.repositories.person_repository import PersonRepository
 from app.schemas.person import PersonUpdate
 
@@ -8,8 +9,8 @@ class PersonService:
     def __init__(self):
         self.repo = PersonRepository()
 
-    def list_people(self, db: Session):
-        return self.repo.list_all(db)
+    def list_people(self, db: Session, current_user: User):
+        return self.repo.list_all_for_user(db, current_user)
 
     def get_person(self, db: Session, person_id: int):
         return self.repo.get_by_id(db, person_id)

@@ -5,6 +5,9 @@ from app.models.person import Person
 class PersonRepository:
     def list_all(self, db: Session) -> list[Person]:
         return db.query(Person).order_by(Person.lastname, Person.prename).all()
+    
+    def list_all_for_user(self, db: Session, user_id: int) -> list[Person]:
+        return db.query(Person).filter(Person.creator_id==user_id).order_by(Person.lastname, Person.prename).all()
 
     def get_by_id(self, db: Session, person_id: int) -> Person | None:
         return db.query(Person).filter(Person.id == person_id).first()
