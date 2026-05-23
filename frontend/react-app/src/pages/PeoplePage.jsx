@@ -9,7 +9,7 @@ import {
 } from "../api/poeple";
 import CreateRow from "../components/tableContent/CreateRow";
 import TableRows from "../components/tableContent/tableRows";
-import TableHeaderRow from "../components/tableContent/HeaderRow";
+import HeaderRow from "../components/tableContent/HeaderRow";
 
 export default function PersonPage() {
   const { t } = useLanguage();

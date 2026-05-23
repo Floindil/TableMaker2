@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { getTeams, createTeam, deleteTeam, updateTeam } from "../api/teams";
 import { useLanguage } from "../context/LanguageContext";
 
-import TableHeaderRow from "../components/tableContent/HeaderRow";
 import CreateRow from "../components/tableContent/CreateRow";
 import TableRows from "../components/tableContent/TableRows";
+import HeaderRow from "../components/tableContent/HeaderRow";
 
 export default function TeamsPage() {
   const { t } = useLanguage();
