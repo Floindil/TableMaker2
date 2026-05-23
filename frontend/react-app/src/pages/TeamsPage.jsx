@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Trash, SquarePen } from "lucide-react";
 import { getTeams, createTeam, deleteTeam, updateTeam } from "../api/teams";
 import { useLanguage } from "../context/LanguageContext";
 
-export default function TeamsPage() {
-  const { t } = useLanguage()
+import TableHeaderRow from "../components/tableContent/HeaderRow";
+import CreateRow from "../components/tableContent/CreateRow";
+import TableRows from "../components/tableContent/TableRows";
 
-  const [Teams, setTeams] = useState([]);
-  const [selectedTeam, setSelectedTeam] = useState(null);
+export default function TeamsPage() {
+  const { t } = useLanguage();
+
+  const [teams, setTeams] = useState([]);
+  const [createDraft, setCreateDraft] = useState({});
+  const [editingId, setEditingId] = useState(null);
+  const [draft, setDraft] = useState({});
+
+  const columns = [
+    { label: t("team.name"), key: "name" },
+    { label: t("team.coach"), key: "coach" },
+    { label: t("person.title"), key: "personAmount" },
+  ];
 
   const loadTeams = async () => {
     const data = await getTeams();
@@ -18,73 +29,90 @@ export default function TeamsPage() {
     loadTeams();
   }, []);
 
-  const handleCreate = async (team) => {
-    await createTeam(team);
+  const handleCreateChange = (key, value) => {
+    setCreateDraft((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const handleCreate = async () => {
+    await createTeam(createDraft);
+    setCreateDraft({});
     loadTeams();
   };
 
-  const handleUpdate = async (team) => {
-    await updateTeam(selectedTeam.id, team);
-    loadTeams();
+  const handleErase = () => {
+    setCreateDraft({});
   };
 
   const handleDelete = async (teamId) => {
     await deleteTeam(teamId);
-    loadTeams()
+    loadTeams();
   };
 
-  const handleEdit = async (team) => {
-    setSelectedTeam(team);
-    setShowModal(true);
+  const handleEdit = (team) => {
+    setEditingId(team.id);
+    setDraft({ ...team });
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-    setSelectedTeam(null);
+  const handleCancel = () => {
+    setEditingId(null);
+    setDraft({});
   };
 
-  const columns = [
-    {label: t("team.name"), key: "name"},
-    {label: t("team.coach"), key: "coach"},
-    {label: t("person.title"), key: "personAmount"}
-  ]
+  const handleDraftChange = (key, value) => {
+    setDraft((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const handleSave = async (teamId) => {
+    await updateTeam(teamId, draft);
+
+    setTeams((prev) =>
+      prev.map((team) =>
+        team.id === teamId ? { ...team, ...draft } : team
+      )
+    );
+
+    setEditingId(null);
+    setDraft({});
+  };
 
   return (
     <div className="container">
       <h2>{t("team.title")}</h2>
 
-      <button onClick={() => {
-        setSelectedTeam(null);
-        setShowModal(true);
-      }}>
-        {t("team.create")}
-      </button>
-
       <table>
         <thead>
-          <tr>
-            {columns.map((c) => (<th key={c.key}>{c.label}</th>))}
-            <th>{t("common.actions")}</th>
-          </tr>
-          <tr>
-            <th colSpan={columns.length + 1}><div className="separator" /></th>
-          </tr>
+          <HeaderRow
+            columns={columns}
+            actionsLabel={t("common.actions")}
+          />
         </thead>
 
         <tbody>
-          {Teams.map((t) => (
-            <tr key={t.id}>
-              {columns.map((c) => (<td key={c.key}>{t[c.key]}</td>))}
-              <td className="button-cell">
-                <button className="button-cell-button" onClick={() => handleEdit(p)}>
-                  <SquarePen size={18}/>
-                </button>
-                <button className="button-cell-button" onClick={() => handleDelete(p.id)}>
-                  <Trash  size={18}/>
-                </button>
-              </td>
-            </tr>
-          ))}
+          <CreateRow
+            columns={columns}
+            draft={createDraft}
+            onChange={handleCreateChange}
+            onCreate={handleCreate}
+            onErase={handleErase}
+          />
+
+          <TableRows
+            items={teams}
+            columns={columns}
+            editingId={editingId}
+            draft={draft}
+            onDraftChange={handleDraftChange}
+            onEdit={handleEdit}
+            onSave={handleSave}
+            onCancel={handleCancel}
+            onDelete={handleDelete}
+          />
         </tbody>
       </table>
     </div>

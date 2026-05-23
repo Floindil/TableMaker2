@@ -7,6 +7,9 @@ import {
   getPeople,
   updatePerson,
 } from "../api/poeple";
+import CreateRow from "../components/tableContent/CreateRow";
+import TableRows from "../components/tableContent/tableRows";
+import TableHeaderRow from "../components/tableContent/HeaderRow";
 
 export default function PersonPage() {
   const { t } = useLanguage();
@@ -92,114 +95,29 @@ export default function PersonPage() {
 
       <table>
         <thead>
-          <tr>
-            {columns.map((c) => (
-              <th key={c.key}>{c.label}</th>
-            ))}
-            <th>{t("common.actions")}</th>
-          </tr>
-
-          <tr>
-            <th colSpan={columns.length + 1}>
-              <div className="separator" />
-            </th>
-          </tr>
+          <HeaderRow columns={columns} actionsLabel={t("common.actions")}/>
         </thead>
 
         <tbody>
-          <tr>
-            {columns.map((c) => (
-              <td key={c.key}>
-                <input
-                  id={`create-${c.key}`}
-                  value={createDraft[c.key] ?? ""}
-                  onChange={(e) =>
-                    handleCreateChange(c.key, e.target.value)
-                  }
-                  {...(c.ac ? { autoComplete: c.ac } : {})}
-                  className="create-input"
-                  placeholder={c.label}
-                />
-              </td>
-            ))}
+          <CreateRow
+            columns={columns}
+            draft={createDraft}
+            onChange={handleCreateChange}
+            onCreate={handleCreate}
+            onErase={handleErase}
+          />
 
-            <td className="button-cell">
-              <button
-                className="button-cell-button"
-                onClick={handleCreate}
-              >
-                <SquarePlus size={18} />
-              </button>
-
-              <button
-                className="button-cell-button"
-                onClick={handleErase}
-              >
-                <Eraser size={18} />
-              </button>
-            </td>
-          </tr>
-
-          {people.map((p) => {
-            const isEditing = editingId === p.id;
-
-            return (
-              <tr key={p.id}>
-                {columns.map((c) => (
-                  <td key={c.key}>
-                    {isEditing ? (
-                      <input
-                        id={`edit-${p.id}-${c.key}`}
-                        value={draft[c.key] ?? ""}
-                        onChange={(e) =>
-                          handleDraftChange(c.key, e.target.value)
-                        }
-                        {...(c.ac ? { autoComplete: c.ac } : {})}
-                      />
-                    ) : (
-                      <span className="table-cell">{p[c.key] || "-"}</span>
-                    )}
-                  </td>
-                ))}
-
-                <td className="button-cell">
-                  {isEditing ? (
-                    <>
-                      <button
-                        className="button-cell-button"
-                        onClick={() => handleSave(p.id)}
-                      >
-                        <Save size={18} />
-                      </button>
-
-                      <button
-                        className="button-cell-button"
-                        onClick={handleCancel}
-                      >
-                        <SquareX size={18} />
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <button
-                        className="button-cell-button"
-                        onClick={() => handleEdit(p)}
-                      >
-                        <SquarePen size={18} />
-                      </button>
-
-                      <button
-                        className="button-cell-button"
-                        onClick={() => handleDelete(p.id)}
-                      >
-                        <Trash size={18} color="red" />
-                      </button>
-                    </>
-                  )}
-                </td>
-              </tr>
-            );
-          })}
+          <TableRows
+            items={people}
+            columns={columns}
+            editingId={editingId}
+            draft={draft}
+            onDraftChange={handleDraftChange}
+            onEdit={handleEdit}
+            onSave={handleSave}
+            onCancel={handleCancel}
+            onDelete={handleDelete}
+          />
         </tbody>
       </table>
     </div>
