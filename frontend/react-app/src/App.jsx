@@ -14,9 +14,9 @@ export default function App() {
     <>
       <SlideMenu />
       <Routes>
-        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/"  element={<ProtectedRoute><HomePage /></ProtectedRoute>}/>
         <Route path="/people"  element={<ProtectedRoute><PersonPage /></ProtectedRoute>}/>
         <Route path="/teams"  element={<ProtectedRoute><TeamsPage /></ProtectedRoute>}/>
         <Route path="*" element={<Navigate to="/login" replace />} />
