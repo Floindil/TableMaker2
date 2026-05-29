@@ -11,7 +11,6 @@ export async function getTeamById(teamID) {
 }
 
 export async function createTeam(teamData) {
-  console.log(teamData)
   return apiRequest("/teams/", {
     method: "POST",
     body: JSON.stringify(teamData)

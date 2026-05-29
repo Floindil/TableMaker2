@@ -5,7 +5,9 @@ export async function getPeople() {
 }
 
 export async function getPersonById(personId) {
-  return apiRequest(`/people/${personId}`)
+  return apiRequest(`/people/${personId}`, {
+    method: "GET"
+  });
 }
 
 export async function createPerson(personData) {

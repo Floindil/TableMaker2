@@ -26,6 +26,7 @@ class PersonRead(BaseModel):
     email: EmailStr | None = None
     phone: str | None = None
     license: str | None = None
+    creator_id: int
 
     model_config = {"from_attributes": True}
 

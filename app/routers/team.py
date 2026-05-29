@@ -27,7 +27,7 @@ def get_team(team_id: int, db: DbSession):
     return team
 
 
-@router.post("/", response_model=TeamRead, status_code=201)
+@router.post("/", response_model=TeamCreate, status_code=201)
 def create_team(
     payload: TeamCreate,
     db: DbSession,
