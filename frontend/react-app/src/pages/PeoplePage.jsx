@@ -49,7 +49,6 @@ export default function PersonPage() {
   };
 
   const handleInfo = async (personId) => {
-    console.log(personId)
     navigate(`/people/${personId}`)
   }
 

@@ -5,7 +5,7 @@ export async function getTeams() {
 }
 
 export async function getTeamById(teamID) {
-  return apiRequest(`teams/${teamID}`, {
+  return apiRequest(`/teams/${teamID}`, {
     method: "GET",
   })
 }

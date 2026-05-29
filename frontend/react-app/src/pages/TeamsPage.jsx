@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getTeams, createTeam, deleteTeam, updateTeam } from "../api/teams";
+import { getTeams, createTeam, deleteTeam, updateTeam, getTeamById } from "../api/teams";
 import { useLanguage } from "../context/LanguageContext";
 import { getTeamInfoColumns } from "../components/tables/content/columnDefinitions";
 import { useNavigate } from "react-router-dom";
@@ -37,18 +37,24 @@ export default function TeamsPage() {
   };
 
   const handleSave = async (teamId, draft) => {
-    await updateTeam(teamId, draft);
+    const team = await getTeamById(teamId)
+
+    const updatedTeam = {
+      ...team,
+      name: draft.name
+    };
+
+    await updateTeam(teamId, updatedTeam);
 
     setTeams((prev) =>
       prev.map((p) =>
-        p.id === teamId ? { ...p, ...draft } : p
+        p.id === teamId ? { ...p, ...updatedTeam } : p
       )
     );
   };
 
   const handleInfo = async (teamId) => {
-    console.log(teamId)
-    navigate(`/people/${teamId}`)
+    navigate(`/teams/${teamId}`)
   }
 
   return (

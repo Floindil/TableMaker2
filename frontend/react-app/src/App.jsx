@@ -22,7 +22,7 @@ export default function App() {
         <Route path="/people"  element={<ProtectedRoute><PersonPage /></ProtectedRoute>}/>
         <Route path="/people/:personId" element={<PersonInfoPage />} />
         <Route path="/teams"  element={<ProtectedRoute><TeamsPage /></ProtectedRoute>}/>
-        <Route path="/teams/:id" element={<TeamInfoPage />} />
+        <Route path="/teams/:teamId" element={<TeamInfoPage />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </>

@@ -24,9 +24,9 @@ export default function InlineEditRows({
     }));
   };
 
-  const handleEdit = (person) => {
-    setEditingId(person.id);
-    setDraft({ ...person });
+  const handleEdit = (item) => {
+    setEditingId(item.id);
+    setDraft({ ...item });
   };
 
   const handleCancel = () => {
@@ -34,14 +34,14 @@ export default function InlineEditRows({
     setDraft({});
   };
 
-  const handleSave = async (personId) => {
-    await onSave(personId, draft);
+  const handleSave = async (itemId) => {
+    await onSave(itemId, draft);
     setEditingId(null);
     setDraft({});
   };
 
-  const handleInfo = async (personId) => {
-    await onInfo(personId)
+  const handleInfo = async (itemId) => {
+    await onInfo(itemId)
   };
 
   return (
@@ -53,7 +53,7 @@ export default function InlineEditRows({
           <tr key={i.id}>
             {columns.map((c) => (
               <td key={c.key}>
-                {isEditing ? (
+                {isEditing && c.editable !== false ? (
                   <input
                     id={`edit-${i.id}-${c.key}`}
                     value={draft[c.key] ?? ""}

@@ -27,7 +27,6 @@ class TeamUpdate(BaseModel):
     name: str
     league: str | None = None
     abbreviation: str | None = None
-    creator_id: int
     club_id: int | None = None
 
     @field_validator("name")

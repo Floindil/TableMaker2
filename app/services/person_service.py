@@ -39,8 +39,6 @@ class PersonService:
             raise HTTPException(status_code=400, detail="Keine Änderungsdaten übergeben")
 
         return self.repo.update(db, person, **update_data)
-    
-    from fastapi import HTTPException
 
     def delete_person(self, db: Session, person_id: int):
         person = self.repo.delete(db, person_id)
