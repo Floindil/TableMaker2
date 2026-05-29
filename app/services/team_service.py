@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.repositories.team_repository import TeamRepository
 from app.repositories.person_repository import PersonRepository
+from app.schemas.team import TeamUpdate
 
 
 class TeamService:
@@ -25,6 +26,19 @@ class TeamService:
             creator_id=current_user_id,
             club_id=payload.club_id
         )
+    
+    def update_team(self, db: Session, team_id: int, payload: TeamUpdate):
+        team = self.repo.get_by_id(db, team_id)
+
+        if not team:
+            raise HTTPException(status_code=404, detail="Team nicht gefunden")
+
+        update_data = payload.model_dump(exclude_unset=True)
+
+        if not update_data:
+            raise HTTPException(status_code=400, detail="Keine Änderungsdaten übergeben")
+
+        return self.repo.update(db, team, **update_data)
 
     def add_person_to_team(self, db: Session, team_id: int, payload):
         team = self.team_repo.get_by_id(db, team_id)
