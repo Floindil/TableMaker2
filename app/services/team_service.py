@@ -38,7 +38,7 @@ class TeamService:
         if not update_data:
             raise HTTPException(status_code=400, detail="Keine Änderungsdaten übergeben")
 
-        return self.repo.update(db, team, **update_data)
+        return self.team_repo.update(db, team, **update_data)
 
     def add_person_to_team(self, db: Session, team_id: int, payload):
         team = self.team_repo.get_by_id(db, team_id)
