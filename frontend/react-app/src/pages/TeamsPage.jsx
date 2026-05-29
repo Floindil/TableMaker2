@@ -25,8 +25,8 @@ export default function TeamsPage() {
   
   const handleCreate = async (draft) => {
     draft.abbreviation="";
-    draft.league="";
-    draft.club_id="";
+    draft.league=null;
+    draft.club_id=null;
     await createTeam(draft);
     loadTeams();
   };
