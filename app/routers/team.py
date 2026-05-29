@@ -33,7 +33,7 @@ def create_team(
     db: DbSession,
     current_user: User = Depends(get_current_user)
 ):
-    return service.create_team(db, payload, current_user)
+    return service.create_team(db, payload, current_user.id)
 
 
 @router.patch("/{team_id}", response_model=TeamRead)
