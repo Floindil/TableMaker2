@@ -28,7 +28,7 @@ class TeamService:
         )
     
     def update_team(self, db: Session, team_id: int, payload: TeamUpdate):
-        team = self.repo.get_by_id(db, team_id)
+        team = self.team_repo.get_by_id(db, team_id)
 
         if not team:
             raise HTTPException(status_code=404, detail="Team nicht gefunden")
