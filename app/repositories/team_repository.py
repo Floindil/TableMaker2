@@ -17,6 +17,14 @@ class TeamRepository:
         db.refresh(team)
         return team
 
+    def update(self, db: Session, team: Team, **data) -> Team:
+        for key, value in data.items():
+            setattr(team, key, value)
+
+        db.commit()
+        db.refresh(team)
+        return team
+
     def add_player_to_team(
         self,
         db: Session,
