@@ -1,21 +1,49 @@
 import {
+  Info,
   Save,
   SquarePen,
   SquareX,
   Trash,
 } from "lucide-react";
+import { useState } from "react";
 
-export default function TableRows({
+export default function InlineEditRows({
   items,
   columns,
-  editingId,
-  draft,
-  onDraftChange,
-  onEdit,
   onSave,
-  onCancel,
   onDelete,
+  onInfo
 }) {
+  const [draft, setDraft] = useState({});
+  const [editingId, setEditingId] = useState(null);
+
+  const handleChange = (key, value) => {
+    setDraft((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const handleEdit = (person) => {
+    setEditingId(person.id);
+    setDraft({ ...person });
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+    setDraft({});
+  };
+
+  const handleSave = async (personId) => {
+    await onSave(personId, draft);
+    setEditingId(null);
+    setDraft({});
+  };
+
+  const handleInfo = async (personId) => {
+    await onInfo(personId)
+  };
+
   return (
     <>
       {items.map((i) => {
@@ -29,9 +57,7 @@ export default function TableRows({
                   <input
                     id={`edit-${i.id}-${c.key}`}
                     value={draft[c.key] ?? ""}
-                    onChange={(e) =>
-                      onDraftChange(c.key, e.target.value)
-                    }
+                    onChange={(e) => handleChange(c.key, e.target.value)}
                     {...(c.ac ? { autoComplete: c.ac } : {})}
                   />
                 ) : (
@@ -43,18 +69,24 @@ export default function TableRows({
             ))}
 
             <td className="button-cell">
+              <button
+                className="button-cell-button"
+                onClick={() => handleInfo(i.id)}
+              >
+                <Info size={18} />
+              </button>
               {isEditing ? (
                 <>
                   <button
                     className="button-cell-button"
-                    onClick={() => onSave(i.id)}
+                    onClick={() => handleSave(i.id)}
                   >
                     <Save size={18} />
                   </button>
 
                   <button
                     className="button-cell-button"
-                    onClick={onCancel}
+                    onClick={handleCancel}
                   >
                     <SquareX size={18} />
                   </button>
@@ -63,7 +95,7 @@ export default function TableRows({
                 <>
                   <button
                     className="button-cell-button"
-                    onClick={() => onEdit(i)}
+                    onClick={() => handleEdit(i)}
                   >
                     <SquarePen size={18} />
                   </button>

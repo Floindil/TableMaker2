@@ -4,7 +4,14 @@ export async function getTeams() {
   return apiRequest("/teams/");
 }
 
+export async function getTeamById(teamID) {
+  return apiRequest(`teams/${teamID}`, {
+    method: "GET",
+  })
+}
+
 export async function createTeam(teamData) {
+  console.log(teamData)
   return apiRequest("/teams/", {
     method: "POST",
     body: JSON.stringify(teamData)

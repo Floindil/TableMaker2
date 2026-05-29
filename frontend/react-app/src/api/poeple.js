@@ -4,6 +4,10 @@ export async function getPeople() {
   return apiRequest("/people/");
 }
 
+export async function getPersonById(personId) {
+  return apiRequest(`/people/${personId}`)
+}
+
 export async function createPerson(personData) {
   return apiRequest("/people/", {
     method: "POST",

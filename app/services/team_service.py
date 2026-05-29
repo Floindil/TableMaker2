@@ -16,13 +16,13 @@ class TeamService:
     def get_team(self, db: Session, team_id: int):
         return self.team_repo.get_by_id(db, team_id)
 
-    def create_team(self, db: Session, payload):
+    def create_team(self, db: Session, payload, current_user_id):
         return self.team_repo.create(
             db,
             name=payload.name,
             abbreviation=payload.abbreviation,
             league=payload.league,
-            creator_id=payload.creator_id,
+            creator_id=current_user_id,
             club_id=payload.club_id
         )
 

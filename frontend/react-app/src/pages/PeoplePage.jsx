@@ -7,26 +7,17 @@ import {
   getPeople,
   updatePerson,
 } from "../api/poeple";
-import CreateRow from "../components/tableContent/CreateRow";
-import TableRows from "../components/tableContent/tableRows";
-import HeaderRow from "../components/tableContent/HeaderRow";
+import { getPeopleInputColumns } from "../components/tables/content/columnDefinitions";
+import { useNavigate } from "react-router-dom";
+import InlineEditTable from "../components/tables/InlineEditTable";
 
 export default function PersonPage() {
   const { t } = useLanguage();
 
   const [people, setPeople] = useState([]);
-  const [createDraft, setCreateDraft] = useState({});
-  const [editingId, setEditingId] = useState(null);
-  const [draft, setDraft] = useState({});
 
-  const columns = [
-    { label: t("field.firstName"), key: "prename", ac: "given-name" },
-    { label: t("field.lastName"), key: "lastname", ac: "family-name" },
-    { label: t("field.birthdate"), key: "birthdate", ac: "date" },
-    { label: t("field.email"), key: "email", ac: "email" },
-    { label: t("field.phone"), key: "phone", ac: "tel" },
-    { label: t("field.license"), key: "license", ac: "" },
-  ];
+  const columns = getPeopleInputColumns(t)
+  const navigate = useNavigate();
 
   const loadPeople = async () => {
     const data = await getPeople();
@@ -37,21 +28,9 @@ export default function PersonPage() {
     loadPeople();
   }, []);
 
-  const handleCreateChange = (key, value) => {
-    setCreateDraft((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
-
-  const handleCreate = async () => {
-    await createPerson(createDraft);
-    setCreateDraft({});
+  const handleCreate = async (draft) => {
+    await createPerson(draft);
     loadPeople();
-  };
-
-  const handleErase = () => {
-    setCreateDraft({});
   };
 
   const handleDelete = async (personId) => {
@@ -59,24 +38,7 @@ export default function PersonPage() {
     loadPeople();
   };
 
-  const handleEdit = (person) => {
-    setEditingId(person.id);
-    setDraft({ ...person });
-  };
-
-  const handleCancel = () => {
-    setEditingId(null);
-    setDraft({});
-  };
-
-  const handleDraftChange = (key, value) => {
-    setDraft((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
-
-  const handleSave = async (personId) => {
+  const handleSave = async (personId, draft) => {
     await updatePerson(personId, draft);
 
     setPeople((prev) =>
@@ -84,42 +46,24 @@ export default function PersonPage() {
         p.id === personId ? { ...p, ...draft } : p
       )
     );
-
-    setEditingId(null);
-    setDraft({});
   };
+
+  const handleInfo = async (personId) => {
+    console.log(personId)
+    navigate(`/people/${personId}`)
+  }
 
   return (
     <div className="container">
       <h2>{t("person.title")}</h2>
-
-      <table>
-        <thead>
-          <HeaderRow columns={columns} actionsLabel={t("common.actions")}/>
-        </thead>
-
-        <tbody>
-          <CreateRow
-            columns={columns}
-            draft={createDraft}
-            onChange={handleCreateChange}
-            onCreate={handleCreate}
-            onErase={handleErase}
-          />
-
-          <TableRows
-            items={people}
-            columns={columns}
-            editingId={editingId}
-            draft={draft}
-            onDraftChange={handleDraftChange}
-            onEdit={handleEdit}
-            onSave={handleSave}
-            onCancel={handleCancel}
-            onDelete={handleDelete}
-          />
-        </tbody>
-      </table>
+      <InlineEditTable
+        columns={columns}
+        handleCreate={handleCreate}
+        items={people}
+        handleSave={handleSave}
+        handleDelete={handleCreate}
+        handleInfo={handleInfo}
+      />
     </div>
   );
 }

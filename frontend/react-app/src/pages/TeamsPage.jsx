@@ -1,24 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { getTeams, createTeam, deleteTeam, updateTeam } from "../api/teams";
 import { useLanguage } from "../context/LanguageContext";
-
-import CreateRow from "../components/tableContent/CreateRow";
-import TableRows from "../components/tableContent/TableRows";
-import HeaderRow from "../components/tableContent/HeaderRow";
+import { getTeamInfoColumns } from "../components/tables/content/columnDefinitions";
+import { useNavigate } from "react-router-dom";
+import InlineEditRows from "../components/tables/content/InlineEditRows";
+import InlineEditTable from "../components/tables/InlineEditTable";
 
 export default function TeamsPage() {
   const { t } = useLanguage();
+  const navigate = useNavigate();
 
   const [teams, setTeams] = useState([]);
-  const [createDraft, setCreateDraft] = useState({});
-  const [editingId, setEditingId] = useState(null);
-  const [draft, setDraft] = useState({});
 
-  const columns = [
-    { label: t("team.name"), key: "name" },
-    { label: t("team.coach"), key: "coach" },
-    { label: t("person.title"), key: "personAmount" },
-  ];
+  const columns = getTeamInfoColumns(t)
 
   const loadTeams = async () => {
     const data = await getTeams();
@@ -28,22 +22,13 @@ export default function TeamsPage() {
   useEffect(() => {
     loadTeams();
   }, []);
-
-  const handleCreateChange = (key, value) => {
-    setCreateDraft((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
-
-  const handleCreate = async () => {
-    await createTeam(createDraft);
-    setCreateDraft({});
+  
+  const handleCreate = async (draft) => {
+    draft.abbreviation="";
+    draft.league="";
+    draft.club_id="";
+    await createTeam(draft);
     loadTeams();
-  };
-
-  const handleErase = () => {
-    setCreateDraft({});
   };
 
   const handleDelete = async (teamId) => {
@@ -51,70 +36,33 @@ export default function TeamsPage() {
     loadTeams();
   };
 
-  const handleEdit = (team) => {
-    setEditingId(team.id);
-    setDraft({ ...team });
-  };
-
-  const handleCancel = () => {
-    setEditingId(null);
-    setDraft({});
-  };
-
-  const handleDraftChange = (key, value) => {
-    setDraft((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
-
-  const handleSave = async (teamId) => {
+  const handleSave = async (teamId, draft) => {
     await updateTeam(teamId, draft);
 
     setTeams((prev) =>
-      prev.map((team) =>
-        team.id === teamId ? { ...team, ...draft } : team
+      prev.map((p) =>
+        p.id === teamId ? { ...p, ...draft } : p
       )
     );
-
-    setEditingId(null);
-    setDraft({});
   };
+
+  const handleInfo = async (teamId) => {
+    console.log(teamId)
+    navigate(`/people/${teamId}`)
+  }
 
   return (
     <div className="container">
       <h2>{t("team.title")}</h2>
 
-      <table>
-        <thead>
-          <HeaderRow
-            columns={columns}
-            actionsLabel={t("common.actions")}
-          />
-        </thead>
-
-        <tbody>
-          <CreateRow
-            columns={columns}
-            draft={createDraft}
-            onChange={handleCreateChange}
-            onCreate={handleCreate}
-            onErase={handleErase}
-          />
-
-          <TableRows
-            items={teams}
-            columns={columns}
-            editingId={editingId}
-            draft={draft}
-            onDraftChange={handleDraftChange}
-            onEdit={handleEdit}
-            onSave={handleSave}
-            onCancel={handleCancel}
-            onDelete={handleDelete}
-          />
-        </tbody>
-      </table>
+      <InlineEditTable
+        columns={columns}
+        handleCreate={handleCreate}
+        items={teams}
+        handleSave={handleSave}
+        handleDelete={handleDelete}
+        handleInfo={handleInfo}
+      />
     </div>
   );
 }

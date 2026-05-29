@@ -8,6 +8,8 @@ import RegisterPage from "./pages/RegisterPage";
 import LanguageSwitcher from "./components/slideMenu/LanguageSwitcher";
 import TeamsPage from "./pages/TeamsPage";
 import PersonPage from "./pages/PeoplePage";
+import PersonInfoPage from "./pages/PersonInfoPage";
+import TeamInfoPage from "./pages/TeamInfoPage";
 
 export default function App() {
   return (
@@ -18,7 +20,9 @@ export default function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/"  element={<ProtectedRoute><HomePage /></ProtectedRoute>}/>
         <Route path="/people"  element={<ProtectedRoute><PersonPage /></ProtectedRoute>}/>
+        <Route path="/people/:personId" element={<PersonInfoPage />} />
         <Route path="/teams"  element={<ProtectedRoute><TeamsPage /></ProtectedRoute>}/>
+        <Route path="/teams/:id" element={<TeamInfoPage />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </>

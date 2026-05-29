@@ -14,7 +14,6 @@ class TeamRead(BaseModel):
     name: str
     league: str | None = None
     abbreviation: str | None = None
-    creator_id: int
     club_id: int | None = None
 
     model_config = {"from_attributes": True}
