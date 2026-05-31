@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import auth, club, person, role, team, tournament, user
+
 from app.core.db import Base, engine
+from app.routers import auth, club, person, role, team, tournament, user
 
 from app.models.club_person import ClubPerson
 from app.models.club_user import ClubUser
@@ -19,12 +20,6 @@ from app.models.user import User
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
-
-from app.routers import team
-
-Base.metadata.create_all(bind=engine)
-
 app = FastAPI(title="TableMaker API", version="1.0.0")
 
 app.add_middleware(
@@ -34,7 +29,10 @@ app.add_middleware(
         "http://localhost:5500",
         "http://192.168.1.111:5500",
         "http://192.168.1.104:5500",
-        "http://localhost:5173"
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://192.168.1.111:5173",
+        "http://192.168.1.104:5173",
     ],
     allow_credentials=True,
     allow_methods=["*"],
