@@ -4,7 +4,6 @@ from pydantic import BaseModel, field_validator
 class ClubCreate(BaseModel):
     name: str
     abbreviation: str | None = None
-    creator_id: int
 
 
 class ClubRead(BaseModel):

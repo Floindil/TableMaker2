@@ -14,6 +14,8 @@ export default {
         logout: "Abmelden",
         registration: "Registration",
         register: "Registrieren",
+        owner: "Besitzer",
+        abrv: "Abkürzung"
     },
     messages: {
         noDataLoaded: "Noch keine Daten geladen"
@@ -38,6 +40,16 @@ export default {
         name: "Teamname",
         coach: "Trainer",
         create: "Team erstellen"
+    },
+    club: {
+        title: "Vereine",
+        name: "Vereinsname",
+        create: "Verein erstellen"
+    },
+    tournament: {
+        title: "Turniere",
+        name: "Tourniername",
+        create: "Turnier erstellen"
     },
     alert: {
         loginFailed: "Anmeldung fehlgeschlagen",

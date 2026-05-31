@@ -4,18 +4,26 @@ from sqlalchemy.orm import Session
 
 from app.core.db import get_db
 from app.core.deps import get_current_user
+from app.models.user import User
 from app.schemas.club import ClubAddTeam, ClubAddUser, ClubCreate, ClubRead, ClubUpdate, ClubAddPerson
+from app.schemas.person import PersonRead
+from app.schemas.team import TeamRead
 from app.services.club_service import ClubService
+from app.services.person_service import PersonService
+from app.services.team_service import TeamService
 
 router = APIRouter(dependencies=[Depends(get_current_user)])
 service = ClubService()
+person_service = PersonService()
+team_service = TeamService()
 
 DbSession = Annotated[Session, Depends(get_db)]
+CurrentUser = Annotated[User, Depends(get_current_user)]
 
 
 @router.get("/", response_model=list[ClubRead])
-def list_clubs(db: DbSession):
-    return service.list_clubs(db)
+def list_clubs(db: DbSession, current_user: CurrentUser):
+    return service.list_clubs_for_user(db, current_user.id)
 
 
 @router.get("/{club_id}", response_model=ClubRead)
@@ -24,6 +32,16 @@ def get_club(club_id: int, db: DbSession):
     if not club:
         raise HTTPException(status_code=404, detail="Club nicht gefunden")
     return club
+
+
+@router.get("/{club_id}/people", response_model=list[PersonRead])
+def get_people_for_club(club_id: int, db: DbSession):
+    return person_service.list_people_for_club(db, club_id)
+
+
+@router.get("/{club_id}/teams", response_model=list[TeamRead])
+def get_teams_for_club(club_id: int, db: DbSession):
+    return team_service.list_teams_for_club(db, club_id)
 
 
 @router.post("/", response_model=ClubRead, status_code=201)

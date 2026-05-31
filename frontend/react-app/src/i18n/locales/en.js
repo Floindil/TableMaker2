@@ -13,7 +13,9 @@ export default {
         login: "Login",
         logout: "Logout",
         registration: "Registration",
-        register: "Register"
+        register: "Register",
+        owner: "Owner",
+        abrv: "Abbreviation"
     },
     messages: {
         noDataLoaded: "No data loaded yet"
@@ -38,6 +40,16 @@ export default {
         name: "Teamname",
         coach: "Coach",
         create: "create Team"
+    },
+    club: {
+        title: "Clubs",
+        name: "Clubname",
+        create: "Create Club"
+    },
+    tournament: {
+        title: "Tournament",
+        name: "Tournamentname",
+        create: "Create Tournament"
     },
     alert: {
         loginFailed: "Login failed",

@@ -14,17 +14,19 @@ class ClubService:
 
     def list_clubs(self, db: Session):
         return self.repo.list_all(db)
+    
+    def list_clubs_for_user(self, db: Session, user_id):
+        return self.repo.list_all_for_user(db, user_id)
 
     def get_club(self, db: Session, club_id: int):
         return self.repo.get_by_id(db, club_id)
 
-    def create_club(self, db: Session, payload):
+    def create_club(self, db: Session, payload, owner_id: int):
         return self.repo.create(
             db,
             name=payload.name,
             abbreviation=payload.abbreviation,
-            description=payload.description,
-            owner_id=payload.owner_id
+            owner_id=owner_id
         )
     
     def update_club(self, db: Session, club_id: int, payload: ClubUpdate):

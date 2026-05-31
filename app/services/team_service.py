@@ -16,6 +16,9 @@ class TeamService:
 
     def list_teams_for_user(self, db: Session, current_user_id: int):
         return self.team_repo.list_all_for_user(db, current_user_id)
+    
+    def list_teams_for_club(self, db: Session, club_id: int):
+        return self.team_repo.list_all_for_club(club_id)
 
     def get_team(self, db: Session, team_id: int):
         return self.team_repo.get_by_id(db, team_id)

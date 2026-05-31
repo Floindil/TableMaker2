@@ -2,14 +2,12 @@ import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import "../components/slideMenu/SlideMenu.css"
+import { getPrivateLinks } from "../components/slideMenu/links";
 
 export default function PageNavigator() {
   const { t } = useLanguage();
 
-  const links = [
-    { path: "/people", label: t("person.title") },
-    { path: "/teams", label: t("team.title") },
-  ];
+  const links = getPrivateLinks(t);
 
   return (
     <div className="container">

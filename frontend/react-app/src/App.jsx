@@ -12,6 +12,7 @@ import TeamsPage from "./pages/teams/TeamsPage";
 import TeamInfoPage from "./pages/teams/TeamInfoPage";
 import PersonPage from "./pages/people/PeoplePage";
 import PersonInfoPage from "./pages/people/PersonInfoPage";
+import ClubsPage from "./pages/clubs/ClubsPage";
 
 export default function App() {
   return (
@@ -21,10 +22,15 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/"  element={<ProtectedRoute><HomePage /></ProtectedRoute>}/>
+
         <Route path="/people"  element={<ProtectedRoute><PersonPage /></ProtectedRoute>}/>
-        <Route path="/people/:personId" element={<PersonInfoPage />} />
+        <Route path="/people/:personId" element={<ProtectedRoute><PersonInfoPage /></ProtectedRoute>} />
+
         <Route path="/teams"  element={<ProtectedRoute><TeamsPage /></ProtectedRoute>}/>
-        <Route path="/teams/:teamId" element={<TeamInfoPage />} />
+        <Route path="/teams/:teamId" element={<ProtectedRoute><TeamInfoPage /></ProtectedRoute>} />
+
+        <Route path="/clubs"  element={<ProtectedRoute><ClubsPage /></ProtectedRoute>}/>
+
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </>

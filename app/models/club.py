@@ -8,6 +8,7 @@ class Club(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, nullable=False)
+    abbreviation = Column(String, nullable=True)
     description = Column(String, nullable=True)
     owner_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 

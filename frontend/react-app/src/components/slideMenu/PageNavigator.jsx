@@ -3,6 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import "./SlideMenu.css";
 import { useLanguage } from "../../context/LanguageContext";
 import { useAuth } from "../../context/AuthContext";
+import { getPrivateLinks, getPublicLinks } from "./links";
 
 export default function PageNavigator({ closeMenu }) {
   const { t } = useLanguage();
@@ -10,15 +11,8 @@ export default function PageNavigator({ closeMenu }) {
 
   const { isLoggedIn } = useAuth();
 
-  const publicLinks = [
-    { path: "/login", label: t("common.login") },
-    { path: "/register", label: t("common.register") },
-  ];
-
-  const privateLinks = [
-    { path: "/people", label: t("person.title") },
-    { path: "/teams", label: t("team.title") },
-  ];
+  const publicLinks = getPublicLinks(t)
+  const privateLinks = getPrivateLinks(t)
 
   const links = isLoggedIn ? privateLinks : publicLinks;
 

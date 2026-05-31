@@ -14,6 +14,12 @@ class PersonService:
 
     def list_people_for_user(self, db: Session, current_user_id: int):
         return self.repo.list_all_for_user(db, current_user_id)
+    
+    def list_people_for_team(self, db: Session, team_id: int):
+        return self.repo.list_all_for_team(db, team_id)
+    
+    def list_people_for_club(self, db: Session, club_id: int):
+        return self.repo.list_all_for_club(db, club_id)
 
     def get_person(self, db: Session, person_id: int):
         return self.repo.get_by_id(db, person_id)
