@@ -1,15 +1,17 @@
-import { Navigate, Route, Routes } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import HomePage from "./pages/HomePage";
-import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import React from "react";
-import SlideMenu from "./components/slideMenu/SlideMenu";
-import RegisterPage from "./pages/RegisterPage";
+import { Navigate, Route, Routes } from "react-router-dom";
+
+import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import LanguageSwitcher from "./components/slideMenu/LanguageSwitcher";
-import TeamsPage from "./pages/TeamsPage";
-import PersonPage from "./pages/PeoplePage";
-import PersonInfoPage from "./pages/PersonInfoPage";
-import TeamInfoPage from "./pages/TeamInfoPage";
+import SlideMenu from "./components/slideMenu/SlideMenu";
+
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/auth/LoginPage";
+import RegisterPage from "./pages/auth/RegisterPage";
+import TeamsPage from "./pages/teams/TeamsPage";
+import TeamInfoPage from "./pages/teams/TeamInfoPage";
+import PersonPage from "./pages/people/PeoplePage";
+import PersonInfoPage from "./pages/people/PersonInfoPage";
 
 export default function App() {
   return (

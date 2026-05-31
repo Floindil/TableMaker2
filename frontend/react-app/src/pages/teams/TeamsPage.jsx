@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getTeams, createTeam, deleteTeam, updateTeam, getTeamById } from "../api/teams";
-import { useLanguage } from "../context/LanguageContext";
-import { getTeamInfoColumns } from "../components/tables/content/columnDefinitions";
+import { getTeams, createTeam, deleteTeam, updateTeam, getTeamById } from "../../api/teams";
+import { useLanguage } from "../../context/LanguageContext";
+import { getTeamInfoColumns } from "../../components/tables/content/columnDefinitions";
 import { useNavigate } from "react-router-dom";
-import InlineEditRows from "../components/tables/content/InlineEditRows";
-import InlineEditTable from "../components/tables/InlineEditTable";
+import InlineEditRows from "../../components/tables/content/InlineEditRows";
+import InlineEditTable from "../../components/tables/InlineEditTable";
 
 export default function TeamsPage() {
   const { t } = useLanguage();

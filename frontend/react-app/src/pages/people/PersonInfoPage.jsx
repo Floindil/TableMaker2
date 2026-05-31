@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getPersonById } from "../api/poeple";
-import { useLanguage } from "../context/LanguageContext";
+import { useLanguage } from "../../context/LanguageContext";
+import { getPersonById } from "../../api/poeple";
 
 export default function PersonInfoPage() {
   const { personId } = useParams();

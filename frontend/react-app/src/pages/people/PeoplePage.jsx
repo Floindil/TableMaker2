@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Trash, SquarePen, Save, SquareX, SquarePlus, Eraser } from "lucide-react";
-import { useLanguage } from "../context/LanguageContext";
+import { useLanguage } from "../../context/LanguageContext";
 import {
   createPerson,
   deletePerson,
   getPeople,
   updatePerson,
-} from "../api/poeple";
-import { getPeopleInputColumns } from "../components/tables/content/columnDefinitions";
-import { useNavigate } from "react-router-dom";
-import InlineEditTable from "../components/tables/InlineEditTable";
+} from "../../api/poeple";
+import { getPeopleInputColumns } from "../../components/tables/content/columnDefinitions";
+import InlineEditTable from "../../components/tables/InlineEditTable";
 
 export default function PersonPage() {
   const { t } = useLanguage();

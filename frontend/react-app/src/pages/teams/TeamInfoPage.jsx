@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getTeamById } from "../api/teams";
-import { useLanguage } from "../context/LanguageContext";
+import { getTeamById } from "../../api/teams";
+import { useLanguage } from "../../context/LanguageContext";
 
 export default function TeamInfoPage() {
   const { teamId } = useParams();
