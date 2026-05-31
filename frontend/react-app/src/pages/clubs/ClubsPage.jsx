@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createClub, deleteClub, getClubs } from "../../api/clubs";
+import { createClub, deleteClub, getClubs, updateClub } from "../../api/clubs";
 import { getClubColumns } from "../../components/tables/content/columnDefinitions";
 import InlineEditTable from "../../components/tables/InlineEditTable";
 import { useLanguage } from "../../context/LanguageContext";

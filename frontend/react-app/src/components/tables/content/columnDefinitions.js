@@ -20,7 +20,7 @@ export function getTeamInfoColumns(t) {
 
 export function getClubColumns(t) {
   return [
-    { label: t("common.abrv"), key: "abreveation", editable: true },
+    { label: t("common.abrv"), key: "abbreviation", editable: true },
     { label: t("club.name"), key: "name", editable: true },
     { label: t("common.owner"), key: "owner", editable: false },
     { label: t("person.title"), key: "personAmount", editable: false }
