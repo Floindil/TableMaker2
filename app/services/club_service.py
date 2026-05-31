@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from app.repositories.club_repository import ClubRepository
+from app.repositories.repository import ClubRepository
 from app.repositories.person_repository import PersonRepository
 from app.repositories.team_repository import TeamRepository
 from app.schemas.club import ClubUpdate
@@ -55,18 +55,18 @@ class ClubService:
             raise HTTPException(status_code=404, detail="Club nicht gefunden")
         
     def add_user_to_club(self, db: Session, club_id: int, user_id: int):
-        club = self.club_repo.get_by_id(db, club_id)
+        club = self.repo.get_by_id(db, club_id)
         if not club:
             raise HTTPException(status_code=404, detail="Club nicht gefunden")
 
-        return self.club_repo.add_user_to_club(
+        return self.repo.add_user_to_club(
             db,
             club_id=club_id,
             user_id=user_id,
         )
         
     def add_person_to_club(self, db: Session, club_id: int, payload):
-        club = self.club_repo.get_by_id(db, club_id)
+        club = self.repo.get_by_id(db, club_id)
         if not club:
             raise HTTPException(status_code=404, detail="Club nicht gefunden")
 
@@ -74,14 +74,14 @@ class ClubService:
         if not person:
             raise HTTPException(status_code=404, detail="Spieler nicht gefunden")
 
-        return self.club_repo.add_person_to_club(
+        return self.repo.add_person_to_club(
             db,
             club_id=club_id,
             person_id=payload.person_id,
         )
     
     def add_team_to_club(self, db: Session, club_id: int, payload):
-        club = self.club_repo.get_by_id(db, club_id)
+        club = self.repo.get_by_id(db, club_id)
         if not club:
             raise HTTPException(status_code=404, detail="Club nicht gefunden")
 
@@ -89,7 +89,7 @@ class ClubService:
         if not team:
             raise HTTPException(status_code=404, detail="Spieler nicht gefunden")
 
-        return self.club_repo.add_team_to_club(
+        return self.repo.add_team_to_club(
             db,
             club_id=club_id,
             team_id=payload.team_id,
