@@ -23,7 +23,6 @@ export async function getClubById(clubId) {
 }
 
 export async function createClub(clubData) {
-    console.log(clubData)
   return apiRequest("/clubs/", {
     method: "POST",
     body: JSON.stringify(clubData)
