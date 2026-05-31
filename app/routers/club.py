@@ -45,8 +45,8 @@ def get_teams_for_club(club_id: int, db: DbSession):
 
 
 @router.post("/", response_model=ClubRead, status_code=201)
-def create_club(payload: ClubCreate, db: DbSession):
-    return service.create_club(db, payload)
+def create_club(payload: ClubCreate, db: DbSession, current_user: CurrentUser):
+    return service.create_club(db, payload, current_user.id)
 
 
 @router.patch("/{club_id}", response_model=ClubRead)
