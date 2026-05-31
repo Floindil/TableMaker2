@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from app.repositories.repository import ClubRepository
+from app.repositories.club_repository import ClubRepository
 from app.repositories.person_repository import PersonRepository
 from app.repositories.team_repository import TeamRepository
 from app.schemas.club import ClubUpdate
