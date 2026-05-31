@@ -10,7 +10,7 @@ class ClubRead(BaseModel):
     id: int
     name: str
     abbreviation: str | None = None
-    creator_id: int
+    owner_id: int
 
     model_config = {"from_attributes": True}
 
@@ -30,7 +30,7 @@ class ClubAddTeam(BaseModel):
 class ClubUpdate(BaseModel):
     name: str
     abbreviation: str | None = None
-    creator_id: int
+    owner_id: int
 
     @field_validator("name")
     @classmethod
