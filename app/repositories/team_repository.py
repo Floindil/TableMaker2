@@ -6,6 +6,9 @@ from app.models.team_person import TeamPerson
 class TeamRepository:
     def list_all(self, db: Session) -> list[Team]:
         return db.query(Team).order_by(Team.name).all()
+    
+    def list_all_for_user(self, db: Session, user_id: int) -> list[Team]:
+        return db.query(Team).filter(Team.creator_id==user_id).order_by(Team.name).all()
 
     def get_by_id(self, db: Session, team_id: int) -> Team | None:
         return db.query(Team).filter(Team.id == team_id).first()

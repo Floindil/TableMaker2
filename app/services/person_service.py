@@ -9,7 +9,10 @@ class PersonService:
     def __init__(self):
         self.repo = PersonRepository()
 
-    def list_people(self, db: Session, current_user_id: int):
+    def list_people(self, db: Session):
+        return self.repo.list_all(db)
+
+    def list_people_for_user(self, db: Session, current_user_id: int):
         return self.repo.list_all_for_user(db, current_user_id)
 
     def get_person(self, db: Session, person_id: int):

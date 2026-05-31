@@ -12,6 +12,7 @@ export function getPeopleInputColumns(t) {
 export function getTeamInfoColumns(t) {
   return [
     { label: t("team.name"), key: "name", editable: true },
+    { label: t("club.title"), key: "club", editable: false },
     { label: t("team.coach"), key: "coach", editable: false },
     { label: t("person.title"), key: "personAmount", editable: false },
   ];

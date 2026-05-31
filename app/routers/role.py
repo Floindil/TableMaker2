@@ -18,6 +18,11 @@ def list_roles(db: DbSession):
     return service.list_roles(db)
 
 
+@router.get("/{club_id}/", response_model=list[RoleRead])
+def list_roles_for_club(club_id: int, db: DbSession):
+    return service.list_roles_for_club(db, club_id)
+
+
 @router.get("/{role_id}", response_model=RoleRead)
 def get_role(role_id: int, db: DbSession):
     role = service.get_role(db, role_id)

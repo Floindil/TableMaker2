@@ -1,5 +1,7 @@
 from sqlalchemy.orm import Session
+from app.models.club_person import ClubPerson
 from app.models.person import Person
+from app.models.team_person import TeamPerson
 
 
 class PersonRepository:
@@ -7,7 +9,30 @@ class PersonRepository:
         return db.query(Person).order_by(Person.lastname, Person.prename).all()
     
     def list_all_for_user(self, db: Session, user_id: int) -> list[Person]:
-        return db.query(Person).filter(Person.creator_id==user_id).order_by(Person.lastname, Person.prename).all()
+        return (
+            db.query(Person)
+            .filter(Person.creator_id==user_id)
+            .order_by(Person.lastname, Person.prename)
+            .all()
+        )
+    
+    def list_all_for_team(self, db: Session, team_id: int) -> list[Person]:
+        return (
+            db.query(Person)
+            .join(TeamPerson.person)
+            .filter(TeamPerson.team_id == team_id)
+            .order_by(Person.lastname, Person.prename)
+            .all()
+        )
+
+    def list_all_for_club(self, db: Session, club_id: int) -> list[Person]:
+        return (
+            db.query(Person)
+            .join(ClubPerson.person)
+            .filter(ClubPerson.club_id == club_id)
+            .order_by(Person.lastname, Person.prename)
+            .all()
+        )
 
     def get_by_id(self, db: Session, person_id: int) -> Person | None:
         return db.query(Person).filter(Person.id == person_id).first()

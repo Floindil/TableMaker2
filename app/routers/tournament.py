@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.core.db import get_db
 from app.core.deps import get_current_user
+from app.models.user import User
 from app.schemas.tournament import TournamentCreate, TournamentRead, TournamentUpdate, TournamentAddTeam
 from app.services.tournament_service import TournamentService
 
@@ -11,6 +12,7 @@ router = APIRouter(dependencies=[Depends(get_current_user)])
 service = TournamentService()
 
 DbSession = Annotated[Session, Depends(get_db)]
+CurrentUser = Annotated[User, Depends(get_current_user)]
 
 
 @router.get("/", response_model=list[TournamentRead])
@@ -27,8 +29,12 @@ def get_tournament(tournament_id: int, db: DbSession):
 
 
 @router.post("/", response_model=TournamentRead, status_code=201)
-def create_tournament(payload: TournamentCreate, db: DbSession):
-    return service.create_tournament(db, payload)
+def create_tournament(
+    payload: TournamentCreate,
+    db: DbSession,
+    current_user: CurrentUser
+):
+    return service.create_tournament(db, payload, current_user.id)
 
 
 @router.patch("/{tournament_id}", response_model=TournamentRead)

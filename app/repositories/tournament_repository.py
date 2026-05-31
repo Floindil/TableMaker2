@@ -5,6 +5,22 @@ from app.models.tournament import Tournament
 class TournamentRepository:
     def list_all(self, db: Session) -> list[Tournament]:
         return db.query(Tournament).order_by(Tournament.name).all()
+    
+    def list_all_for_user(self, db: Session, user_id: int) -> list[Tournament]:
+        return (
+            db.query(Tournament)
+            .filter(Tournament.creator_id == user_id)
+            .order_by(Tournament.start_date)
+            .all()
+        )
+    
+    def list_all_for_club(self, db: Session, club_id: int) -> list[Tournament]:
+        return (
+            db.query(Tournament)
+            .filter(Tournament.organizer_club)
+            .order_by(Tournament.start_date)
+            .all()
+        )
 
     def get_by_id(self, db: Session, tournament_id: int) -> Tournament | None:
         return db.query(Tournament).filter(Tournament.id == tournament_id).first()

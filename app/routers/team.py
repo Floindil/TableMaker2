@@ -12,11 +12,12 @@ router = APIRouter(dependencies=[Depends(get_current_user)])
 service = TeamService()
 
 DbSession = Annotated[Session, Depends(get_db)]
+CurrentUser = Annotated[User, Depends(get_current_user)]
 
 
 @router.get("/", response_model=list[TeamRead])
-def list_teams(db: DbSession):
-    return service.list_teams(db)
+def list_teams(db: DbSession, current_user: CurrentUser):
+    return service.list_teams_for_user(db, current_user.id)
 
 
 @router.get("/{team_id}", response_model=TeamRead)

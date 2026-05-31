@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, Date, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from app.core.db import Base
 
@@ -8,6 +8,8 @@ class Tournament(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
+    start_date = Column(Date, nullable=True)
+    end_date = Column(Date, nullable=True)
 
     creator_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     club_id = Column(Integer, ForeignKey("clubs.id"), nullable=True)

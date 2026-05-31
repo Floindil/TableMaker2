@@ -11,6 +11,9 @@ class RoleService:
     def list_roles(self, db: Session):
         return self.repo.list_all(db)
 
+    def list_roles_for_club(self, db: Session, club_id: int):
+        return self.repo.list_all_for_club(db, club_id)
+
     def get_role(self, db: Session, role_id: int):
         return self.repo.get_by_id(db, role_id)
 

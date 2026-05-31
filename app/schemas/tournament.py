@@ -1,16 +1,21 @@
+from datetime import date
+
 from pydantic import BaseModel, field_validator
 
 
 class TournamentCreate(BaseModel):
     name: str
     abbreviation: str | None = None
-    creator_id: int
+    start_date: date | None = None
+    end_date: date | None = None
 
 
 class TournamentRead(BaseModel):
     id: int
     name: str
     abbreviation: str | None = None
+    start_date: date | None = None
+    end_date: date | None = None
     creator_id: int
 
     model_config = {"from_attributes": True}
@@ -23,6 +28,8 @@ class TournamentAddTeam(BaseModel):
 class TournamentUpdate(BaseModel):
     name: str
     abbreviation: str | None = None
+    start_date: date | None = None
+    end_date: date | None = None
     creator_id: int
 
     @field_validator("name")

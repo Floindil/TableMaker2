@@ -6,6 +6,9 @@ class RoleRepository:
     def list_all(self, db: Session) -> list[Role]:
         return db.query(Role).order_by(Role.name).all()
 
+    def list_all_for_club(self, db: Session, club_id: int) -> list[Role]:
+        return db.query(Role).filter(Role.club_id == club_id).order_by(Role.name).all()
+
     def get_by_id(self, db: Session, role_id: int) -> Role | None:
         return db.query(Role).filter(Role.id == role_id).first()
 

@@ -17,7 +17,7 @@ CurrentUser = Annotated[User, Depends(get_current_user)]
 
 @router.get("/", response_model=list[PersonRead])
 def list_people(db: DbSession, current_user: CurrentUser):
-    return service.list_people(db, current_user.id)
+    return service.list_people_for_user(db, current_user.id)
 
 
 @router.get("/{person_id}", response_model=PersonRead)

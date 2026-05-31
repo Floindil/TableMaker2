@@ -16,12 +16,13 @@ class TournamentService:
     def get_tournament(self, db: Session, tournament_id: int):
         return self.tournament_repo.get_by_id(db, tournament_id)
 
-    def create_tournament(self, db: Session, payload):
+    def create_tournament(self, db: Session, payload, creator_id: int):
         return self.tournament_repo.create(
             db,
             name=payload.name,
-            league=payload.league,
-            creator_id=payload.creator_id,
+            start_date=payload.start_date,
+            end_date=payload.end_date,
+            creator_id=creator_id,
             club_id=payload.club_id
         )
 

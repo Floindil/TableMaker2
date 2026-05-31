@@ -14,10 +14,13 @@ class TeamService:
     def list_teams(self, db: Session):
         return self.team_repo.list_all(db)
 
+    def list_teams_for_user(self, db: Session, current_user_id: int):
+        return self.team_repo.list_all_for_user(db, current_user_id)
+
     def get_team(self, db: Session, team_id: int):
         return self.team_repo.get_by_id(db, team_id)
 
-    def create_team(self, db: Session, payload, current_user_id):
+    def create_team(self, db: Session, payload, current_user_id: int):
         return self.team_repo.create(
             db,
             name=payload.name,
