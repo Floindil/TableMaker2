@@ -22,12 +22,16 @@ class ClubService:
         return self.repo.get_by_id(db, club_id)
 
     def create_club(self, db: Session, payload, owner_id: int):
-        return self.repo.create(
+        club = self.repo.create(
             db,
             name=payload.name,
             abbreviation=payload.abbreviation,
             owner_id=owner_id
         )
+
+        self.add_user_to_club(db, club.id, owner_id)
+
+        return club
     
     def update_club(self, db: Session, club_id: int, payload: ClubUpdate):
         club = self.repo.get_by_id(db, club_id)
@@ -49,6 +53,17 @@ class ClubService:
 
         if not club:
             raise HTTPException(status_code=404, detail="Club nicht gefunden")
+        
+    def add_user_to_club(self, db: Session, club_id: int, user_id: int):
+        club = self.club_repo.get_by_id(db, club_id)
+        if not club:
+            raise HTTPException(status_code=404, detail="Club nicht gefunden")
+
+        return self.club_repo.add_user_to_club(
+            db,
+            club_id=club_id,
+            user_id=user_id,
+        )
         
     def add_person_to_club(self, db: Session, club_id: int, payload):
         club = self.club_repo.get_by_id(db, club_id)

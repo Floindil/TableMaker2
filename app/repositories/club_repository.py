@@ -42,3 +42,15 @@ class ClubRepository:
         db.delete(club)
         db.commit()
         return club
+    
+    def add_user_to_club(self, db: Session, club_id: int, user_id: int):
+        club_user = ClubUser(
+            club_id=club_id,
+            user_id=user_id,
+        )
+
+        db.add(club_user)
+        db.commit()
+        db.refresh(club_user)
+
+        return club_user
