@@ -13,6 +13,7 @@ import TeamInfoPage from "./pages/teams/TeamInfoPage";
 import PersonPage from "./pages/people/PeoplePage";
 import PersonInfoPage from "./pages/people/PersonInfoPage";
 import ClubsPage from "./pages/clubs/ClubsPage";
+import ClubInfoPage from "./pages/clubs/ClubInfoPage";
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
         <Route path="/teams/:teamId" element={<ProtectedRoute><TeamInfoPage /></ProtectedRoute>} />
 
         <Route path="/clubs"  element={<ProtectedRoute><ClubsPage /></ProtectedRoute>}/>
+        <Route path="/clubs/:clubId" element={<ProtectedRoute><ClubInfoPage /></ProtectedRoute>} />
 
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
