@@ -33,7 +33,7 @@ export default function App() {
         <Route path="/clubs"  element={<ProtectedRoute><ClubsPage /></ProtectedRoute>}/>
         <Route path="/clubs/:clubId" element={<ProtectedRoute><ClubInfoPage /></ProtectedRoute>} />
 
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
     </>
   );

@@ -15,6 +15,8 @@ export default {
         registration: "Registration",
         register: "Register",
         owner: "Owner",
+        member: "Member",
+        members: "Members",
         abrv: "Abbreviation"
     },
     messages: {
