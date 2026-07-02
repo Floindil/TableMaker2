@@ -1,5 +1,7 @@
 from pydantic import BaseModel, field_validator
 
+from app.schemas.user import UserRead
+
 
 class ClubCreate(BaseModel):
     name: str
@@ -10,7 +12,18 @@ class ClubRead(BaseModel):
     id: int
     name: str
     abbreviation: str | None = None
-    owner_id: int
+    owner: UserRead
+    member_count: int
+
+    model_config = {"from_attributes": True}
+
+
+class ClubReadMembers(BaseModel):
+    id: int
+    name: str
+    abbreviation: str | None = None
+    owner: UserRead
+    members: list[UserRead]
 
     model_config = {"from_attributes": True}
 

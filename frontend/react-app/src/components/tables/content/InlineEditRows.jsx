@@ -6,6 +6,7 @@ import {
   Trash,
 } from "lucide-react";
 import { useState } from "react";
+import { getValue } from "./columnDefinitions";
 
 export default function InlineEditRows({
   items,
@@ -56,13 +57,13 @@ export default function InlineEditRows({
                 {isEditing && c.editable !== false ? (
                   <input
                     id={`edit-${i.id}-${c.key}`}
-                    value={draft[c.key] ?? ""}
+                    value={getValue(draft,c.key) ?? ""}
                     onChange={(e) => handleChange(c.key, e.target.value)}
                     {...(c.ac ? { autoComplete: c.ac } : {})}
                   />
                 ) : (
                   <span className="table-cell">
-                    {i[c.key] || "-"}
+                    {getValue(i,c.key) || "-"}
                   </span>
                 )}
               </td>

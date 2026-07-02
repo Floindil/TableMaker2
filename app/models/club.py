@@ -20,3 +20,7 @@ class Club(Base):
     club_people = relationship("ClubPerson", back_populates="club", cascade="all, delete-orphan")
 
     organized_tournaments = relationship("Tournament", back_populates="organizer_club")
+
+    @property 
+    def member_count(self):
+        return len(self.club_people)

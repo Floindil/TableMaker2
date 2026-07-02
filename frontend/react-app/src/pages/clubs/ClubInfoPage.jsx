@@ -63,7 +63,7 @@ export default function ClubInfoPage() {
         <tbody>
           <tr>
             <td>{t("common.owner")}</td>
-            <td>{club.owner}</td>
+            <td>{club.owner.email}</td>
           </tr>
           <tr>
             <td>{t("common.abrv")}</td>

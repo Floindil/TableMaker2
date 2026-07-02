@@ -2,31 +2,17 @@ from pydantic import BaseModel, field_validator
 
 
 class UserCreate(BaseModel):
-    name: str
-    abbreviation: str | None = None
-    creator_id: int
+    email: str
+    password: str
 
 
 class UserRead(BaseModel):
     id: int
-    name: str
-    abbreviation: str | None = None
-    creator_id: int
+    email: str
 
     model_config = {"from_attributes": True}
 
 
 class UserUpdate(BaseModel):
-    name: str
-    abbreviation: str | None = None
-    creator_id: int
-
-    @field_validator("name")
-    @classmethod
-    def validate_optional_names(cls, value: str | None) -> str | None:
-        if value is None:
-            return value
-        value = value.strip()
-        if not value:
-            raise ValueError("Darf nicht leer sein")
-        return value
+    email: str
+    password: str | None = None

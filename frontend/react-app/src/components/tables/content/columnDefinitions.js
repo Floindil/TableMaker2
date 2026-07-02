@@ -22,7 +22,11 @@ export function getClubColumns(t) {
   return [
     { label: t("common.abrv"), key: "abbreviation", editable: true },
     { label: t("club.name"), key: "name", editable: true },
-    { label: t("common.owner"), key: "owner", editable: false },
-    { label: t("person.title"), key: "personAmount", editable: false }
+    { label: t("common.owner"), key: "owner.email", editable: false },
+    { label: t("person.title"), key: "member_count", editable: false }
   ];
+}
+
+export function getValue(obj, key) {
+  return key.split(".").reduce((value, part) => value?.[part], obj);
 }
