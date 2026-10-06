@@ -41,9 +41,9 @@ class ClubAddTeam(BaseModel):
 
 
 class ClubUpdate(BaseModel):
-    name: str
+    name: str | None = None
     abbreviation: str | None = None
-    owner_id: int
+    owner_id: int | None = None
 
     @field_validator("name")
     @classmethod
