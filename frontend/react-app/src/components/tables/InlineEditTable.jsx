@@ -8,7 +8,9 @@ export default function InlineEditTable({
     items,
     handleSave,
     handleDelete,
-    handleInfo
+    handleInfo,
+    handleCancel,
+    showCreateRow = false
 }) {
     return (
         <table>
@@ -16,10 +18,13 @@ export default function InlineEditTable({
                 <HeaderRow columns={columns}/>
             </thead>
             <tbody>
-                <CreateRow
-                    columns={columns}
-                    onCreate={handleCreate}
-                />
+                {handleCreate && showCreateRow && (
+                    <CreateRow
+                        columns={columns}
+                        onCancel={handleCancel}
+                        onCreate={handleCreate}
+                    />
+                )}
                 <InlineEditRows
                     items={items}
                     columns={columns}
@@ -30,4 +35,5 @@ export default function InlineEditTable({
             </tbody>
         </table>
     )
+
 }

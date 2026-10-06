@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import { getClubById, getPeopleForClub } from "../../api/clubs";
 import { getPeopleInputColumns } from "../../components/tables/content/columnDefinitions";
+import { SquarePlus, ListPlus } from "lucide-react";
 import InlineEditRows from "../../components/tables/content/InlineEditRows";
 import InlineEditTable from "../../components/tables/InlineEditTable";
 
@@ -12,23 +13,29 @@ export default function ClubInfoPage() {
 
   const [club, setClub] = useState(null);
   const [members, setMembers] = useState([]);
+  const [showCreateRow, setShowCreateRow] = useState(false);
 
   const columns = getPeopleInputColumns(t);
 
-  const handleSave = async () => {
+  const handleSavePerson = async () => {
     console.log("Save")
   };
 
-  const handleCreate = async () => {
+  const handleCreatePerson = async () => {
+    setShowCreateRow(false)
     console.log("Create")
   };
 
-  const handleDelete = async () => {
+  const handleDeletePerson = async () => {
     console.log("delete")
-  }
+  };
 
-  const handleInfo = async () => {
+  const handlePersonInfo = async () => {
     console.log("info")
+  };
+
+  const togglePersonCreateRow = async () => {
+    setShowCreateRow(!showCreateRow)
   };
 
   useEffect(() => {
@@ -76,13 +83,21 @@ export default function ClubInfoPage() {
         </tbody>
       </table>
       <h3> {t("person.title")} </h3>
+      <button
+        className="button-cell-button"
+        onClick={() => togglePersonCreateRow()}
+        >
+        <SquarePlus size={18} />
+      </button>
       <InlineEditTable
         columns={columns}
-        handleCreate={handleCreate}
+        handleCreate={handleCreatePerson}
         items={members}
-        onSave={handleSave}
-        onDelete={handleDelete}
-        onInfo={handleInfo}
+        handleSave={handleSavePerson}
+        handleDelete={handleDeletePerson}
+        handleInfo={handlePersonInfo}
+        handleCancel={togglePersonCreateRow}
+        showCreateRow={showCreateRow}
       />
     </div>
   );

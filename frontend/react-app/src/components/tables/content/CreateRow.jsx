@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { SquarePlus, Eraser } from "lucide-react";
+import { SquarePlus, Eraser, SquareX } from "lucide-react";
 
-export default function CreateRow({ columns, onCreate }) {
+export default function CreateRow({ columns, onCancel, onCreate }) {
   const [draft, setDraft] = useState({});
 
   const handleChange = (key, value) => {
@@ -21,7 +21,7 @@ export default function CreateRow({ columns, onCreate }) {
   };
 
   return (
-    <tr>
+    <tr className="create-row">
       {columns.map((c) => (
         <td key={c.key}>
           { c.editable ? (
@@ -47,6 +47,12 @@ export default function CreateRow({ columns, onCreate }) {
         <button className="button-cell-button" onClick={handleErase}>
           <Eraser size={18} />
         </button>
+
+        {onCancel && (
+          <button className="button-cell-button" onClick={onCancel}>
+            <SquareX size={18} />
+          </button>
+        )}
       </td>
     </tr>
   );
