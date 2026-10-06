@@ -39,6 +39,11 @@ def get_people_for_club(club_id: int, db: DbSession):
     return person_service.list_people_for_club(db, club_id)
 
 
+@router.get("/{club_id}/otherPeople", response_model=list[PersonRead])
+def get_people_not_in_club(club_id: int, db: DbSession, current_user: CurrentUser):
+    return person_service.list_people_not_in_club(db, club_id, current_user.id)
+
+
 @router.get("/{club_id}/teams", response_model=list[TeamRead])
 def get_teams_for_club(club_id: int, db: DbSession):
     return team_service.list_teams_for_club(db, club_id)
@@ -63,7 +68,15 @@ def delete_club(club_id: int, db: DbSession):
 def add_person_to_club(club_id: int, payload: ClubAddPerson, db: DbSession):
     link = service.add_person_to_club(db, club_id, payload)
     return {
-        "message": "Spieler zum Club hinzugefügt",
+        "message": "Person zum Club hinzugefügt",
+        "link_id": link.id
+    }
+
+@router.delete("/{club_id}/people", status_code=204)
+def remove_person_from_club(club_id: int, payload: ClubAddPerson, db: DbSession):
+    link = service.remove_person_from_club(db, club_id, payload)
+    return {
+        "message": "Person vom Club entfernt",
         "link_id": link.id
     }
 

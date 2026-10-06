@@ -9,6 +9,15 @@ export function getPeopleInputColumns(t) {
   ];
 }
 
+export function getPeopleInfoColumns(t) {
+  return [
+    { label: t("field.firstName"), key: "prename", ac: "given-name", editable: false},
+    { label: t("field.lastName"), key: "lastname", ac: "family-name", editable: false },
+    { label: t("field.birthdate"), key: "birthdate", ac: "date", editable: false },
+    { label: t("field.license"), key: "license", editable: false }
+  ];
+}
+
 export function getTeamInfoColumns(t) {
   return [
     { label: t("team.name"), key: "name", editable: true },

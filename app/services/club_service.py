@@ -79,6 +79,13 @@ class ClubService:
             club_id=club_id,
             person_id=payload.person_id,
         )
+
+    def remove_person_from_club(self, db: Session, club_id: int, payload):    
+            return self.repo.remove_person_from_club(
+                db,
+                club_id=club_id,
+                person_id=payload.person_id,
+            )
     
     def add_team_to_club(self, db: Session, club_id: int, payload):
         club = self.repo.get_by_id(db, club_id)

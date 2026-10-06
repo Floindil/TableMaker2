@@ -13,7 +13,9 @@ export default function InlineEditRows({
   columns,
   onSave,
   onDelete,
-  onInfo
+  onInfo,
+  customAction,
+  customSymbol: CustomSymbol
 }) {
   const [draft, setDraft] = useState({});
   const [editingId, setEditingId] = useState(null);
@@ -108,6 +110,14 @@ export default function InlineEditRows({
                     <Trash size={18} color="red" />
                   </button>
                 </>
+              )}
+              {customAction && (
+                <button
+                  className="button-cell-button"
+                  onClick={() => customAction(i.id)}
+                >
+                  <CustomSymbol size={18} />
+                </button>
               )}
             </td>
           </tr>

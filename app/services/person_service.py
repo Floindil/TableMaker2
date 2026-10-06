@@ -21,6 +21,9 @@ class PersonService:
     def list_people_for_club(self, db: Session, club_id: int):
         return self.repo.list_all_for_club(db, club_id)
 
+    def list_people_not_in_club(self, db: Session, club_id: int, current_user_id: int):
+            return self.repo.list_all_not_in_club(db, club_id, current_user_id)
+
     def get_person(self, db: Session, person_id: int):
         return self.repo.get_by_id(db, person_id)
 
@@ -33,6 +36,7 @@ class PersonService:
             email=payload.email,
             phone=payload.phone,
             license=payload.license,
+            club_id=payload.club_id,
             creator_id=current_user_id
         )
     

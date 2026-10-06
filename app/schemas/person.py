@@ -8,6 +8,7 @@ class PersonCreate(BaseModel):
     email: EmailStr | None = None
     phone: str | None = None
     license: str | None = None
+    club_id: int | None = None
 
     @field_validator("prename", "lastname")
     @classmethod

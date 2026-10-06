@@ -10,6 +10,8 @@ export default function InlineEditTable({
     handleDelete,
     handleInfo,
     handleCancel,
+    customAction,
+    customSymbol: CustomSymbol,
     showCreateRow = false
 }) {
     return (
@@ -31,6 +33,8 @@ export default function InlineEditTable({
                     onSave={handleSave}
                     onDelete={handleDelete}
                     onInfo={handleInfo}
+                    customAction={customAction}
+                    customSymbol={CustomSymbol}
                 />
             </tbody>
         </table>

@@ -11,7 +11,7 @@ class PersonRepository:
     def list_all_for_user(self, db: Session, user_id: int) -> list[Person]:
         return (
             db.query(Person)
-            .filter(Person.creator_id==user_id)
+            .filter(Person.creator_id == user_id)
             .order_by(Person.lastname, Person.prename)
             .all()
         )
@@ -34,14 +34,43 @@ class PersonRepository:
             .all()
         )
 
+    def list_all_not_in_club(self, db: Session, club_id: int, user_id: int) -> list[Person]:
+        return (
+            db.query(Person)
+            .filter(Person.creator_id == user_id)
+            .filter(
+                ~db.query(ClubPerson)
+                .filter(
+                    ClubPerson.person_id == Person.id,
+                    ClubPerson.club_id == club_id
+                )
+                .exists()
+            )
+            .order_by(Person.lastname, Person.prename)
+            .all()
+        )
+
     def get_by_id(self, db: Session, person_id: int) -> Person | None:
         return db.query(Person).filter(Person.id == person_id).first()
 
     def create(self, db: Session, **data) -> Person:
+        club_id = data.pop("club_id", None)
+        
         person = Person(**data)
         db.add(person)
+        db.flush()
+        
+        if club_id is not None:
+            link = ClubPerson(
+                person_id = person.id,
+                club_id = club_id
+            )
+            db.add(link)
+
         db.commit()
         db.refresh(person)
+        db.refresh(link)
+    
         return person
 
     def update(self, db: Session, person: Person, **data) -> Person:
