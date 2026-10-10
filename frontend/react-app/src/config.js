@@ -3,3 +3,9 @@ export const ICON_SIZES = {
     medium: 18,
     large: 24,
 };
+
+export const SUBROUTES = {
+    people: "people",
+    teams: "teams",
+    clubs: "clubs"
+}

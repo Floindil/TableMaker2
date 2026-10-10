@@ -1,9 +1,51 @@
 //const API_BASE_URL = "http://192.168.1.111:8000";
 const API_BASE_URL = "http://localhost:8000";
 
+let refreshPromise = null;
+
 function clearTokens() {
   localStorage.removeItem("access_token");
   localStorage.removeItem("refresh_token");
+}
+
+async function refreshAccessToken() {
+  if (!refreshPromise) {
+    refreshPromise = (async () => {
+      const refreshToken = localStorage.getItem("refresh_token");
+
+      if (!refreshToken) {
+        throw new Error("Nicht eingeloggt");
+      }
+
+      const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          refresh_token: refreshToken,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Session abgelaufen");
+      }
+
+      const data = await response.json();
+
+      localStorage.setItem("access_token", data.access_token);
+
+      if (data.refresh_token) {
+        localStorage.setItem("refresh_token", data.refresh_token);
+      }
+
+      return data.access_token;
+    })().finally(() => {
+      refreshPromise = null;
+    });
+  }
+
+  return refreshPromise;
 }
 
 export async function apiRequest(path, options = {}, retry = true) {
@@ -19,31 +61,11 @@ export async function apiRequest(path, options = {}, retry = true) {
   });
 
   if (response.status === 401 && retry) {
-    const refreshToken = localStorage.getItem("refresh_token");
-
-    if (!refreshToken) {
+    try {
+      await refreshAccessToken();
+    } catch (error) {
       clearTokens();
-      throw new Error("Nicht eingeloggt");
-    }
-
-    const refreshResponse = await fetch(`${API_BASE_URL}/auth/refresh`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ refresh_token: refreshToken })
-    });
-
-    if (!refreshResponse.ok) {
-      clearTokens();
-      throw new Error("Session abgelaufen");
-    }
-
-    const refreshData = await refreshResponse.json();
-
-    localStorage.setItem("access_token", refreshData.access_token);
-    if (refreshData.refresh_token) {
-      localStorage.setItem("refresh_token", refreshData.refresh_token);
+      throw error;
     }
 
     return apiRequest(path, options, false);
