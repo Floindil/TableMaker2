@@ -4,11 +4,14 @@ import { getClubColumns } from "../../components/tables/content/columnDefinition
 import InlineEditTable from "../../components/tables/InlineEditTable";
 import { useLanguage } from "../../context/LanguageContext";
 import { useNavigate } from "react-router-dom";
+import TitleWithActions from "../../components/pages/TitleWithActions";
+import { SquarePlus } from "lucide-react";
 
 export default function ClubsPage() {
     const { t } = useLanguage();
     
     const [clubs, setClubs] = useState([]);
+    const [showCreateRow, setShowCreateRow] = useState(false);
 
     const columns = getClubColumns(t);
     const navigate = useNavigate();
@@ -24,6 +27,7 @@ export default function ClubsPage() {
 
     const handleCreate = async (draft) => {
     await createClub(draft);
+    setShowCreateRow(false)
     loadClubs();
     };
 
@@ -45,9 +49,20 @@ export default function ClubsPage() {
     navigate(`/clubs/${clubId}`)
     };
 
+    const toggleCreateRow = async () => {
+        setShowCreateRow(!showCreateRow);
+    };
+
+    const titelActions = [
+        {icon: SquarePlus, onClick: toggleCreateRow}
+    ]
+
     return (
         <div className="container">
-            <h2>{t("club.title")}</h2>
+            <TitleWithActions
+                title={t("club.title")}
+                actions={titelActions}
+            />
             <InlineEditTable
                 columns={columns}
                 handleCreate={handleCreate}
@@ -55,6 +70,7 @@ export default function ClubsPage() {
                 handleSave={handleSave}
                 handleDelete={handleDelete}
                 handleInfo={handleInfo}
+                showCreateRow={showCreateRow}
             />
         </div>
     )

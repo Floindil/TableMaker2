@@ -37,6 +37,15 @@ class TeamRepository:
         db.refresh(team)
         return team
 
+    def delete(self, db: Session, team_id: int):
+        team = self.get_by_id(db, team_id)
+        if not team:
+            return None
+
+        db.delete(team)
+        db.commit()
+        return team
+
     def add_player_to_team(
         self,
         db: Session,
@@ -53,3 +62,18 @@ class TeamRepository:
         db.commit()
         db.refresh(link)
         return link
+    
+    def remove_person_from_team(self, db: Session, team_id: int, person_id: int):
+        team_person = (
+            db.query(TeamPerson)
+            .filter(TeamPerson.team_id == team_id)
+            .filter(TeamPerson.person_id == person_id)
+            .first()
+        )
+        if not team_person:
+            return None
+
+        db.delete(team_person)
+        db.commit()
+
+        return team_person

@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import { addPerson, getClubById, getPeopleForClub, getPeopleNotInClub, removePerson } from "../../api/clubs";
+import { createPerson } from "../../api/poeple";
 import { getPeopleInputColumns } from "../../components/tables/content/columnDefinitions";
 import { SquarePlus, ListPlus, Unlink } from "lucide-react";
 import InlineEditTable from "../../components/tables/InlineEditTable";
-import { createPerson } from "../../api/poeple";
 import ListPeopleModal from "../../components/modals/ListPeople";
+import { ICON_SIZES } from "../../config";
 
 export default function ClubInfoPage() {
   const { clubId } = useParams();
@@ -110,13 +111,13 @@ export default function ClubInfoPage() {
           className="button-cell-button"
           onClick={() => togglePersonCreateRow()}
           >
-          <SquarePlus size={18} />
+          <SquarePlus size={ICON_SIZES.medium} />
         </button>        
         <button
           className="button-cell-button"
           onClick={() => setModalShowListPeople(true)}
           >
-          <ListPlus size={18} />
+          <ListPlus size={ICON_SIZES.medium} />
         </button>
 
       </div>

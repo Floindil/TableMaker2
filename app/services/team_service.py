@@ -46,6 +46,12 @@ class TeamService:
 
         return self.team_repo.update(db, team, **update_data)
 
+    def delete_team(self, db: Session, team_id: int):
+        team = self.team_repo.delete(db, team_id)
+
+        if not team:
+            raise HTTPException(status_code=404, detail="Team nicht gefunden")
+
     def add_person_to_team(self, db: Session, team_id: int, payload):
         team = self.team_repo.get_by_id(db, team_id)
         if not team:
@@ -61,3 +67,10 @@ class TeamService:
             person_id=payload.person_id,
             person_number=payload.person_number
         )
+
+    def remove_person_from_team(self, db: Session, team_id: int, payload):    
+                return self.repo.remove_person_from_team(
+                    db,
+                    team_id=team_id,
+                    person_id=payload.person_id,
+                )

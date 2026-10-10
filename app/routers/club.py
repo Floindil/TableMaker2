@@ -54,29 +54,11 @@ def create_club(payload: ClubCreate, db: DbSession, current_user: CurrentUser):
     return service.create_club(db, payload, current_user.id)
 
 
-@router.patch("/{club_id}", response_model=ClubRead)
-def update_club(club_id: int, payload: ClubUpdate, db: DbSession):
-    return service.update_club(db, club_id, payload)
-
-
-@router.delete("/{club_id}", status_code=204)
-def delete_club(club_id: int, db: DbSession):
-    service.delete_club(db, club_id)
-
-
 @router.post("/{club_id}/people", status_code=201)
 def add_person_to_club(club_id: int, payload: ClubAddPerson, db: DbSession):
     link = service.add_person_to_club(db, club_id, payload)
     return {
         "message": "Person zum Club hinzugefügt",
-        "link_id": link.id
-    }
-
-@router.delete("/{club_id}/people", status_code=204)
-def remove_person_from_club(club_id: int, payload: ClubAddPerson, db: DbSession):
-    link = service.remove_person_from_club(db, club_id, payload)
-    return {
-        "message": "Person vom Club entfernt",
         "link_id": link.id
     }
 
@@ -93,5 +75,23 @@ def add_team_to_club(club_id: int, payload: ClubAddTeam, db: DbSession):
     link = service.add_team_to_club(db, club_id, payload)
     return {
         "message": "Team zum Club hinzugefügt",
+        "link_id": link.id
+    }
+
+
+@router.patch("/{club_id}", response_model=ClubRead)
+def update_club(club_id: int, payload: ClubUpdate, db: DbSession):
+    return service.update_club(db, club_id, payload)
+
+
+@router.delete("/{club_id}", status_code=204)
+def delete_club(club_id: int, db: DbSession):
+    service.delete_club(db, club_id)
+
+@router.delete("/{club_id}/people", status_code=204)
+def remove_person_from_club(club_id: int, payload: ClubAddPerson, db: DbSession):
+    link = service.remove_person_from_club(db, club_id, payload)
+    return {
+        "message": "Person von Club entfernt",
         "link_id": link.id
     }

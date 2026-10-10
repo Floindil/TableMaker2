@@ -24,7 +24,7 @@ class TeamAddPerson(BaseModel):
 
 
 class TeamUpdate(BaseModel):
-    name: str
+    name: str | None = None
     league: str | None = None
     abbreviation: str | None = None
     club_id: int | None = None
