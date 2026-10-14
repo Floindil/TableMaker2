@@ -4,18 +4,21 @@ import {
   SquarePen,
   SquareX,
   Trash,
+  Unlink,
 } from "lucide-react";
 import { useState } from "react";
 import { getValue } from "./columnDefinitions";
+import { ICON_SIZES } from "../../../config";
 
 export default function InlineEditRows({
   items,
   columns,
-  onSave,
-  onDelete,
-  onInfo,
-  customAction,
-  customSymbol: CustomSymbol
+  itemHandling: {
+    onSave,
+    onDelete,
+    onInfo,
+    onUnlink
+  },
 }) {
   const [draft, setDraft] = useState({});
   const [editingId, setEditingId] = useState(null);
@@ -76,7 +79,7 @@ export default function InlineEditRows({
                 className="button-cell-button"
                 onClick={() => handleInfo(i.id)}
               >
-                <Info size={18} />
+                <Info size={ICON_SIZES.medium} />
               </button>
               {isEditing ? (
                 <>
@@ -84,14 +87,14 @@ export default function InlineEditRows({
                     className="button-cell-button"
                     onClick={() => handleSave(i.id)}
                   >
-                    <Save size={18} />
+                    <Save size={ICON_SIZES.medium} />
                   </button>
 
                   <button
                     className="button-cell-button"
                     onClick={handleCancel}
                   >
-                    <SquareX size={18} />
+                    <SquareX size={ICON_SIZES.medium} />
                   </button>
                 </>
               ) : (
@@ -100,8 +103,17 @@ export default function InlineEditRows({
                     className="button-cell-button"
                     onClick={() => handleEdit(i)}
                   >
-                    <SquarePen size={18} />
+                    <SquarePen size={ICON_SIZES.medium} />
                   </button>
+
+                  {onUnlink && (
+                    <button
+                      className="button-cell-button"
+                      onClick={() => onUnlink(i.id)}
+                    >
+                      <Unlink size={ICON_SIZES.medium} />
+                    </button>
+                  )}
 
                   <button
                     className="button-cell-button"
@@ -110,14 +122,6 @@ export default function InlineEditRows({
                     <Trash size={18} color="red" />
                   </button>
                 </>
-              )}
-              {customAction && (
-                <button
-                  className="button-cell-button"
-                  onClick={() => customAction(i.id)}
-                >
-                  <CustomSymbol size={18} />
-                </button>
               )}
             </td>
           </tr>

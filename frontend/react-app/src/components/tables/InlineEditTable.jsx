@@ -4,16 +4,24 @@ import InlineEditRows from "./content/InlineEditRows";
 
 export default function InlineEditTable({
     columns,
-    handleCreate,
     items,
-    handleSave,
-    handleDelete,
-    handleInfo,
-    handleCancel,
-    customAction,
-    customSymbol: CustomSymbol,
+    itemHandling: {
+        handleCreate,
+        handleSave,
+        handleDelete,
+        handleInfo,
+        handleUnlink,
+        handleCancel
+    },
     showCreateRow = false
 }) {
+    const lineItemHandling = {
+        onSave: handleSave,
+        onDelete: handleDelete,
+        onInfo: handleInfo,
+        onUnlink: handleUnlink,
+    };
+    
     return (
         <table>
             <thead>
@@ -30,11 +38,7 @@ export default function InlineEditTable({
                 <InlineEditRows
                     items={items}
                     columns={columns}
-                    onSave={handleSave}
-                    onDelete={handleDelete}
-                    onInfo={handleInfo}
-                    customAction={customAction}
-                    customSymbol={CustomSymbol}
+                    itemHandling={lineItemHandling}
                 />
             </tbody>
         </table>

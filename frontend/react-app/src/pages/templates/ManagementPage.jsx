@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import InlineEditTable from "../../components/tables/InlineEditTable";
-import { useLanguage } from "../../context/LanguageContext";
 import { useNavigate } from "react-router-dom";
-import TitleWithActions from "../../components/pages/TitleWithActions";
 import { SquarePlus } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
+import InlineEditTable from "../../components/tables/InlineEditTable";
+import TitleWithActions from "../../components/pages/TitleWithActions";
 
 export default function ManagmentPage({
     titleString,
@@ -12,7 +12,8 @@ export default function ManagmentPage({
         get,
         create,
         update,
-        remove
+        remove,
+        unlink
     },
     subroute
 }) {
@@ -57,13 +58,28 @@ export default function ManagmentPage({
     navigate(`/${subroute}/${id}`)
     };
 
+    const handleUnlink = async (id) => {
+        await unlink(id);
+        loadItems();
+    };
+
     const toggleCreateRow = async () => {
         setShowCreateRow(!showCreateRow);
     };
 
     const titelActions = [
         {icon: SquarePlus, onClick: toggleCreateRow}
-    ]
+    ];
+
+    const lineItemHandling = {
+        handleCreate: handleCreate,
+        handleSave: handleSave,
+        handleDelete: handleDelete,
+        handleInfo: handleInfo,
+        ...(typeof unlink === "function" && {
+            handleUnlink: handleUnlink
+        })
+    };
 
     return (
         <div className="container">
@@ -73,11 +89,8 @@ export default function ManagmentPage({
             />
             <InlineEditTable
                 columns={columns}
-                handleCreate={handleCreate}
                 items={items}
-                handleSave={handleSave}
-                handleDelete={handleDelete}
-                handleInfo={handleInfo}
+                itemHandling={lineItemHandling}
                 showCreateRow={showCreateRow}
             />
         </div>

@@ -25,13 +25,13 @@ export default function App() {
         <Route path="/"  element={<ProtectedRoute><HomePage /></ProtectedRoute>}/>
 
         <Route path="/people"  element={<ProtectedRoute><PersonPage /></ProtectedRoute>}/>
-        <Route path="/people/:personId" element={<ProtectedRoute><PersonInfoPage /></ProtectedRoute>} />
+        <Route path="/people/:id" element={<ProtectedRoute><PersonInfoPage /></ProtectedRoute>} />
 
         <Route path="/teams"  element={<ProtectedRoute><TeamsPage /></ProtectedRoute>}/>
-        <Route path="/teams/:teamId" element={<ProtectedRoute><TeamInfoPage /></ProtectedRoute>} />
+        <Route path="/teams/:id" element={<ProtectedRoute><TeamInfoPage /></ProtectedRoute>} />
 
         <Route path="/clubs"  element={<ProtectedRoute><ClubsPage /></ProtectedRoute>}/>
-        <Route path="/clubs/:clubId" element={<ProtectedRoute><ClubInfoPage /></ProtectedRoute>} />
+        <Route path="/clubs/:id" element={<ProtectedRoute><ClubInfoPage /></ProtectedRoute>} />
 
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>

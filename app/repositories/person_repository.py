@@ -69,7 +69,6 @@ class PersonRepository:
 
         db.commit()
         db.refresh(person)
-        db.refresh(link)
     
         return person
 
