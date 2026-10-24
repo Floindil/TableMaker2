@@ -46,17 +46,17 @@ class TeamRepository:
         db.commit()
         return team
 
-    def add_player_to_team(
+    def add_person_to_team(
         self,
         db: Session,
         team_id: int,
-        player_id: int,
-        player_number: int | None = None
+        person_id: int,
+        person_number: int | None = None
     ) -> TeamPerson:
         link = TeamPerson(
             team_id=team_id,
-            player_id=player_id,
-            player_number=player_number
+            person_id=person_id,
+            person_number=person_number
         )
         db.add(link)
         db.commit()
