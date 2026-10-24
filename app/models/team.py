@@ -1,6 +1,8 @@
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String, select, func
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.hybrid import hybrid_property
 from app.core.db import Base
+from app.models.team_person import TeamPerson
 
 
 class Team(Base):
@@ -19,3 +21,16 @@ class Team(Base):
 
     team_people = relationship("TeamPerson", back_populates="team", cascade="all, delete-orphan")
     tournament_teams = relationship("TournamentTeam", back_populates="team", cascade="all, delete-orphan")
+
+    @hybrid_property
+    def person_amount(self):
+        return len(self.team_people)
+
+    @person_amount.expression
+    def person_amount(cls):
+        return (
+            select(func.count(TeamPerson.id))
+            .where(TeamPerson.team_id == cls.id)
+            .correlate(cls)
+            .scalar_subquery()
+        )

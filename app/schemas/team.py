@@ -11,6 +11,7 @@ class TeamCreate(BaseModel):
 class TeamRead(BaseModel):
     id: int
     name: str
+    person_amount: int
     league: str | None = None
     abbreviation: str | None = None
     creator_id: int

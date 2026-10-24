@@ -61,15 +61,15 @@ export async function removePerson(clubId, personId) {
 // Team Handling
 
 export async function getTeamsForClub(clubId) {
-    return apiRequest(`/clubs/${clubId}/teams`, {
-        method: "GET"
-    });
+  return apiRequest(`/clubs/${clubId}/teams`, {
+      method: "GET"
+  });
 }
 
 export async function getTeamsNotInClub(clubId) {
-    return apiRequest(`/clubs/${clubId}/otherTeams`, {
-        method: "GET"
-    });
+  return apiRequest(`/clubs/${clubId}/otherTeams`, {
+      method: "GET"
+  });
 }
 
 export async function addTeam(clubId, teamId) {
