@@ -16,7 +16,7 @@ const teamHandling = {
 };
 
 const createAndLinkPerson = async (draft, masterId) => {
-  var team = getTeamById(masterId)
+  var team = await getTeamById(masterId)
   return await createPerson({
     ...draft,
     club_id: team.club_id,

@@ -4,12 +4,14 @@ from sqlalchemy.orm import Session
 from app.repositories.team_repository import TeamRepository
 from app.repositories.person_repository import PersonRepository
 from app.schemas.team import TeamUpdate
+from app.services.club_service import ClubService
 
 
 class TeamService:
     def __init__(self):
         self.team_repo = TeamRepository()
         self.person_repo = PersonRepository()
+        self.club_service = ClubService()
 
     def list_teams(self, db: Session):
         return self.team_repo.list_all(db)
@@ -63,6 +65,9 @@ class TeamService:
         person = self.person_repo.get_by_id(db, payload.person_id)
         if not person:
             raise HTTPException(status_code=404, detail="Spieler nicht gefunden")
+
+        if team.club_id is not None:
+            self.club_service.add_person_to_club(db, team.club_id, payload)
 
         return self.team_repo.add_person_to_team(
             db,

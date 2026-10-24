@@ -70,6 +70,21 @@ class ClubRepository:
         db.commit()
 
         return club_person
+
+    def get_club_person(
+        self,
+        db: Session,
+        club_id: int,
+        person_id: int
+    ):
+        return (
+            db.query(ClubPerson)
+            .filter(
+                ClubPerson.club_id == club_id,
+                ClubPerson.person_id == person_id
+            )
+            .first()
+        )
     
     def add_user_to_club(self, db: Session, club_id: int, user_id: int):
         club_user = ClubUser(

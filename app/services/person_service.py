@@ -40,6 +40,7 @@ class PersonService:
             phone=payload.phone,
             license=payload.license,
             club_id=payload.club_id,
+            team_id=payload.team_id,
             creator_id=current_user_id
         )
     

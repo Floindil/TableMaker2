@@ -73,6 +73,15 @@ class ClubService:
         person = self.person_repo.get_by_id(db, payload.person_id)
         if not person:
             raise HTTPException(status_code=404, detail="Spieler nicht gefunden")
+        
+        existing = self.repo.get_club_person(
+            db,
+            club_id=club_id,
+            person_id=payload.person_id
+        )
+
+        if existing:
+            return existing
 
         return self.repo.add_person_to_club(
             db,
