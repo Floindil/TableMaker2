@@ -1,11 +1,11 @@
 
 import { useEffect, useState } from "react";
+import { ListPlus, SquarePlus } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 import { useNavigate } from "react-router-dom";
 import InlineEditTable from "../tables/InlineEditTable";
 import TitleWithActions from "./TitleWithActions";
-import ListPeopleModal from "../modals/ListPeople";
-import { ListPlus, SquarePlus } from "lucide-react";
+import ListItemsModal from "../modals/ListItemsModal";
 
 export default function RelatedItems({
   masterId,
@@ -131,9 +131,10 @@ export default function RelatedItems({
       />
 
       {showModal && add && getAvailable && (
-        <ListPeopleModal
+        <ListItemsModal
+          columns={columns}
+          getItems={handleModalGet}
           onClose={() => setShowModal(false)}
-          getPeople={handleModalGet}
           onAction={handleModalAdd}
         />
       )}

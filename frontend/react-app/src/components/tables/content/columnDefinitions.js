@@ -27,6 +27,14 @@ export function getTeamInfoColumns(t) {
   ];
 }
 
+export function getTeamClubInfoColumns(t) {
+  return [
+    { label: t("team.name"), key: "name", editable: true },
+    { label: t("team.coach"), key: "coach", editable: false },
+    { label: t("person.title"), key: "personAmount", editable: false }
+  ];
+}
+
 export function getClubColumns(t) {
   return [
     { label: t("common.abrv"), key: "abbreviation", editable: true },

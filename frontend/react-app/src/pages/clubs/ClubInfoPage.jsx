@@ -20,7 +20,7 @@ import {
   deleteTeam,
   updateTeam,
 } from "../../api/teams";
-import { getPeopleInputColumns, getTeamInfoColumns } from "../../components/tables/content/columnDefinitions";
+import { getPeopleInputColumns, getTeamClubInfoColumns } from "../../components/tables/content/columnDefinitions";
 import { SUBROUTES } from "../../config";
 import RelatedItemHandling from "../../components/relatedItemHandling";
 
@@ -80,18 +80,18 @@ const clubInfoGetter = (club) => ({
 
 const relatedItemsProperties = [
   {
+    key: "teams",
+    titleString: "team.title",
+    columnsGetter: getTeamClubInfoColumns,
+    relatedItemHandling: relatedTeamsHandling,
+    relatedRoute: SUBROUTES.teams
+  },
+  {
     key: "people",
     titleString: "person.title",
     columnsGetter: getPeopleInputColumns,
     relatedItemHandling: relatedPeopleHandling,
     relatedRoute: SUBROUTES.people
-  },
-  {
-    key: "teams",
-    titleString: "team.title",
-    columnsGetter: getTeamInfoColumns,
-    relatedItemHandling: relatedTeamsHandling,
-    relatedRoute: SUBROUTES.teams
   }
 ];
 

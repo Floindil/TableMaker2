@@ -7,10 +7,11 @@ export default function SingleActionTable({
     action,
     symbol
 }) {
+    const headerColumns = [{key:"placeholder"}, ...columns]
     return (
         <table>
             <thead>
-                <HeaderRow columns={columns}/>
+                <HeaderRow columns={headerColumns}/>
             </thead>
             <tbody>
                 <SingleActionRows
