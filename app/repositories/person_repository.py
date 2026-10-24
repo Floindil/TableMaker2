@@ -50,11 +50,28 @@ class PersonRepository:
             .all()
         )
 
+    def list_all_not_in_team(self, db: Session, team_id: int, user_id: int) -> list[Person]:
+        return (
+            db.query(Person)
+            .filter(Person.creator_id == user_id)
+            .filter(
+                ~db.query(TeamPerson)
+                .filter(
+                    TeamPerson.person_id == Person.id,
+                    TeamPerson.team_id == team_id
+                )
+                .exists()
+            )
+            .order_by(Person.lastname, Person.prename)
+            .all()
+        )
+
     def get_by_id(self, db: Session, person_id: int) -> Person | None:
         return db.query(Person).filter(Person.id == person_id).first()
 
     def create(self, db: Session, **data) -> Person:
         club_id = data.pop("club_id", None)
+        team_id = data.pop("team_id", None)
         
         person = Person(**data)
         db.add(person)
@@ -64,6 +81,13 @@ class PersonRepository:
             link = ClubPerson(
                 person_id = person.id,
                 club_id = club_id
+            )
+            db.add(link)
+
+        if team_id is not None:
+            link = TeamPerson(
+                person_id = person.id,
+                team_id = team_id
             )
             db.add(link)
 
