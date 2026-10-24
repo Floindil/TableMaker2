@@ -13,6 +13,7 @@ import {
 } from "../../api/poeple";
 import { getPeopleInputColumns } from "../../components/tables/content/columnDefinitions";
 import { SUBROUTES } from "../../config";
+import RelatedItemHandling from "../../components/relatedItemHandling";
 
 const clubHandling = {
   get: getClubById
@@ -25,7 +26,7 @@ const createAndLinkPerson = async (draft, masterId) => {
   });
 };
 
-const relatedPeopleHandling = {
+const relatedPeopleHandling = new RelatedItemHandling({
   get: getPeopleForClub,
   getAvailable: getPeopleNotInClub,
   add: addPerson,
@@ -33,7 +34,7 @@ const relatedPeopleHandling = {
   save: updatePerson,
   delete: deletePerson,
   unlink: removePerson
-};
+});
 
 const clubInfoGetter = (club) => ({
   title: club.name,
