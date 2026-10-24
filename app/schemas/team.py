@@ -21,6 +21,7 @@ class TeamRead(BaseModel):
 
 class TeamAddPerson(BaseModel):
     person_id: int
+    person_number: int | None = None
 
 
 class TeamUpdate(BaseModel):

@@ -4,14 +4,23 @@ import {
   getPeopleForClub,
   getPeopleNotInClub,
   addPerson,
-  removePerson
+  removePerson,
+  getTeamsForClub,
+  getTeamsNotInClub,
+  addTeam,
+  removeTeam
 } from "../../api/clubs";
 import {
   createPerson,
   deletePerson,
   updatePerson
 } from "../../api/poeple";
-import { getPeopleInputColumns } from "../../components/tables/content/columnDefinitions";
+import {
+  createTeam,
+  deleteTeam,
+  updateTeam,
+} from "../../api/teams";
+import { getPeopleInputColumns, getTeamInfoColumns } from "../../components/tables/content/columnDefinitions";
 import { SUBROUTES } from "../../config";
 import RelatedItemHandling from "../../components/relatedItemHandling";
 
@@ -26,6 +35,13 @@ const createAndLinkPerson = async (draft, masterId) => {
   });
 };
 
+const createAndLinkTeam = async (draft, masterId) => {
+  return await createTeam({
+    ...draft,
+    club_id: masterId
+  })
+}
+
 const relatedPeopleHandling = new RelatedItemHandling({
   get: getPeopleForClub,
   getAvailable: getPeopleNotInClub,
@@ -34,6 +50,16 @@ const relatedPeopleHandling = new RelatedItemHandling({
   save: updatePerson,
   delete: deletePerson,
   unlink: removePerson
+});
+
+const relatedTeamsHandling = new RelatedItemHandling({
+  get: getTeamsForClub,
+  getAvailable: getTeamsNotInClub,
+  add: addTeam,
+  create: createAndLinkTeam,
+  save: updateTeam,
+  delete: deleteTeam,
+  unlink: removeTeam
 });
 
 const clubInfoGetter = (club) => ({
@@ -59,6 +85,13 @@ const relatedItemsProperties = [
     columnsGetter: getPeopleInputColumns,
     relatedItemHandling: relatedPeopleHandling,
     relatedRoute: SUBROUTES.people
+  },
+  {
+    key: "teams",
+    titleString: "team.title",
+    columnsGetter: getTeamInfoColumns,
+    relatedItemHandling: relatedTeamsHandling,
+    relatedRoute: SUBROUTES.teams
   }
 ];
 

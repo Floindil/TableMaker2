@@ -29,10 +29,12 @@ export async function createTeam(teamData) {
   });
 }
 
-export async function addPerson(teamId, personId) {
+export async function addPerson(teamId, personId, personNumber) {
   return apiRequest(`/teams/${teamId}/people`, {
     method: "POST",
-    body: JSON.stringify({person_id: personId})
+    body: JSON.stringify({
+      person_id: personId,
+      person_number: personNumber})
   })
 }
 

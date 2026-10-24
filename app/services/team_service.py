@@ -18,7 +18,10 @@ class TeamService:
         return self.team_repo.list_all_for_user(db, current_user_id)
     
     def list_teams_for_club(self, db: Session, club_id: int):
-        return self.team_repo.list_all_for_club(club_id)
+        return self.team_repo.list_all_for_club(db, club_id)
+
+    def list_teams_not_in_club(self, db: Session, club_id: int, current_user_id: int):
+            return self.team_repo.list_all_not_in_club(db, club_id, current_user_id)
 
     def get_team(self, db: Session, team_id: int):
         return self.team_repo.get_by_id(db, team_id)
@@ -69,8 +72,8 @@ class TeamService:
         )
 
     def remove_person_from_team(self, db: Session, team_id: int, payload):    
-                return self.repo.remove_person_from_team(
-                    db,
-                    team_id=team_id,
-                    person_id=payload.person_id,
-                )
+        return self.repo.remove_person_from_team(
+            db,
+            team_id=team_id,
+            person_id=payload.person_id,
+        )

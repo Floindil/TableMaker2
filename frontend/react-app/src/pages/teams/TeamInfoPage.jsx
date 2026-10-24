@@ -20,14 +20,19 @@ const createAndLinkPerson = async (draft, masterId) => {
   return await createPerson({
     ...draft,
     club_id: team.club_id,
-    team_id: masterId
+    team_id: masterId,
+    person_number: null
   });
 };
+
+const addPersonToTeam = async (teamId, personId) => {
+  return await addPerson(teamId, personId, null)
+}
 
 const relatedPeopleHandling = new RelatedItemHandling({
   get: getPeopleForTeam,
   getAvailable: getPeopleNotInTeam,
-  add: addPerson,
+  add: addPersonToTeam,
   create: createAndLinkPerson,
   save: updatePerson,
   delete: deletePerson,

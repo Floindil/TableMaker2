@@ -1,3 +1,5 @@
+from operator import or_
+
 from sqlalchemy.orm import Session
 from app.models.club import Club
 from app.models.team import Team
@@ -15,6 +17,15 @@ class TeamRepository:
         return (
             db.query(Team)
             .filter(Team.club_id == club_id)
+            .order_by(Team.name)
+            .all()
+        )
+
+    def list_all_not_in_club(self, db: Session, club_id: int, user_id: int) -> list[Team]:
+        return (
+            db.query(Team)
+            .filter(Team.creator_id == user_id)
+            .filter(or_(Team.club_id != club_id, Team.club_id.is_(None)))
             .order_by(Team.name)
             .all()
         )

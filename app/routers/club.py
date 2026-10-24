@@ -33,50 +33,9 @@ def get_club(club_id: int, db: DbSession):
         raise HTTPException(status_code=404, detail="Club nicht gefunden")
     return club
 
-
-@router.get("/{club_id}/people", response_model=list[PersonRead])
-def get_people_for_club(club_id: int, db: DbSession):
-    return person_service.list_people_for_club(db, club_id)
-
-
-@router.get("/{club_id}/otherPeople", response_model=list[PersonRead])
-def get_people_not_in_club(club_id: int, db: DbSession, current_user: CurrentUser):
-    return person_service.list_people_not_in_club(db, club_id, current_user.id)
-
-
-@router.get("/{club_id}/teams", response_model=list[TeamRead])
-def get_teams_for_club(club_id: int, db: DbSession):
-    return team_service.list_teams_for_club(db, club_id)
-
-
 @router.post("/", response_model=ClubRead, status_code=201)
 def create_club(payload: ClubCreate, db: DbSession, current_user: CurrentUser):
     return service.create_club(db, payload, current_user.id)
-
-
-@router.post("/{club_id}/people", status_code=201)
-def add_person_to_club(club_id: int, payload: ClubAddPerson, db: DbSession):
-    link = service.add_person_to_club(db, club_id, payload)
-    return {
-        "message": "Person zum Club hinzugefügt",
-        "link_id": link.id
-    }
-
-@router.post("/{club_id}/users", status_code=201)
-def add_user_to_club(club_id: int, payload: ClubAddUser, db: DbSession):
-    link = service.add_user_to_club(db, club_id, payload)
-    return {
-        "message": "Benutzer zum Club hinzugefügt",
-        "link_id": link.id
-    }
-
-@router.post("/{club_id}/teams", status_code=201)
-def add_team_to_club(club_id: int, payload: ClubAddTeam, db: DbSession):
-    link = service.add_team_to_club(db, club_id, payload)
-    return {
-        "message": "Team zum Club hinzugefügt",
-        "link_id": link.id
-    }
 
 
 @router.patch("/{club_id}", response_model=ClubRead)
@@ -88,6 +47,36 @@ def update_club(club_id: int, payload: ClubUpdate, db: DbSession):
 def delete_club(club_id: int, db: DbSession):
     service.delete_club(db, club_id)
 
+@router.post("/{club_id}/users", status_code=201)
+def add_user_to_club(club_id: int, payload: ClubAddUser, db: DbSession):
+    link = service.add_user_to_club(db, club_id, payload)
+    return {
+        "message": "Benutzer zum Club hinzugefügt",
+        "link_id": link.id
+    }
+
+
+#region People Handling
+
+@router.get("/{club_id}/people", response_model=list[PersonRead])
+def get_people_for_club(club_id: int, db: DbSession):
+    return person_service.list_people_for_club(db, club_id)
+
+
+@router.get("/{club_id}/otherPeople", response_model=list[PersonRead])
+def get_people_not_in_club(club_id: int, db: DbSession, current_user: CurrentUser):
+    return person_service.list_people_not_in_club(db, club_id, current_user.id)
+
+
+@router.post("/{club_id}/people", status_code=201)
+def add_person_to_club(club_id: int, payload: ClubAddPerson, db: DbSession):
+    link = service.add_person_to_club(db, club_id, payload)
+    return {
+        "message": "Person zum Club hinzugefügt",
+        "link_id": link.id
+    }
+
+
 @router.delete("/{club_id}/people", status_code=204)
 def remove_person_from_club(club_id: int, payload: ClubAddPerson, db: DbSession):
     link = service.remove_person_from_club(db, club_id, payload)
@@ -95,3 +84,18 @@ def remove_person_from_club(club_id: int, payload: ClubAddPerson, db: DbSession)
         "message": "Person von Club entfernt",
         "link_id": link.id
     }
+
+#endregion
+
+#region Team Handling
+
+@router.get("/{club_id}/teams", response_model=list[TeamRead])
+def get_teams_for_club(club_id: int, db: DbSession):
+    return team_service.list_teams_for_club(db, club_id)
+
+
+@router.get("/{club_id}/otherTeams", response_model=list[TeamRead])
+def get_teams_not_in_club(club_id: int, db: DbSession, current_user: CurrentUser):
+    return team_service.list_teams_not_in_club(db, club_id, current_user.id)
+
+#endregion
